@@ -56,9 +56,8 @@ Route::post('update/change/password/{id}', [AdminProfileController::class, 'Upda
 
 // Admin Brand All Route
 Route::prefix('brand')->group(function() {
-//    brand/view route
         Route::get('/view', [BrandController::class, 'BrandView'])->name('all.brand');
-
+        Route::post('/store', [BrandController::class, 'BrandStore'])->name('brand.store');
 
 });
 

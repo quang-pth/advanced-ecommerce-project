@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\AdminProfileController;
+use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -53,5 +54,12 @@ Route::post('admin/profile/store/{id}', [AdminProfileController::class, 'StoreAd
 Route::get('admin/change/password', [AdminProfileController::class, 'AdminChangePassword'])->name('admin.change.password');
 Route::post('update/change/password/{id}', [AdminProfileController::class, 'UpdateChangePassword']);
 
+// Admin Brand All Route
+Route::prefix('brand')->group(function() {
+//    brand/view route
+        Route::get('/view', [BrandController::class, 'BrandView'])->name('all.brand');
+
+
+});
 
 

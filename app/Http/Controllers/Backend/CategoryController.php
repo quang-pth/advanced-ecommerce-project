@@ -43,4 +43,35 @@ class CategoryController extends Controller
         return redirect()->back()->with($notification);
     } // end method
 
+    public function CategoryEdit($id) {
+        $category = Category::findOrFail($id);
+        return view('backend.category.category_edit', compact('category'));
+    }
+
+    public function CategoryUpdate(Request $request) {
+        $request->validate([
+            'category_name_en' => 'required',
+            'category_name_vn' => 'required',
+            'category_icon' => 'required',
+        ], [
+            'category_name_en.required' => 'Input Category English Name cannot be empty',
+            'category_name_vn.required' => 'Input Category Vietnamese Name cannot be empty',
+            'category_icon.required' => 'Input Category Image cannot be empty',
+        ]);
+        $categoryId = $request->id;
+        Category::find($categoryId)->update([
+            'category_name_en' => $request->category_name_en,
+            'category_name_vn' => $request->category_name_vn,
+            'category_slug_en' => strtolower(str_replace(' ', '-', $request->category_name_en)),
+            'category_slug_vn' => strtolower(str_replace(' ', '-', $request->category_name_vn)),
+            'category_icon' => $request->category_icon,
+            'created_at' => Carbon::now(),
+        ]);
+        $notification = [
+            'message' => 'Cateory Successfully',
+            'alert-type' => 'info'
+        ];
+        return redirect()->route('all.category')->with($notification);
+    } // end update method
+
 }

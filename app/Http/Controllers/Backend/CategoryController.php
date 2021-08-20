@@ -36,7 +36,7 @@ class CategoryController extends Controller
         ]);
 
         $notification = [
-            'message' => 'Brand Inserted Successfully',
+            'message' => 'Add ' . $request->category_name_en. ' Successfully',
             'alert-type' => 'success'
         ];
 
@@ -59,6 +59,7 @@ class CategoryController extends Controller
             'category_icon.required' => 'Input Category Image cannot be empty',
         ]);
         $categoryId = $request->id;
+        $categoryName = Category::find($categoryId)->category_name_en;
         Category::find($categoryId)->update([
             'category_name_en' => $request->category_name_en,
             'category_name_vn' => $request->category_name_vn,
@@ -68,10 +69,20 @@ class CategoryController extends Controller
             'created_at' => Carbon::now(),
         ]);
         $notification = [
-            'message' => 'Cateory Successfully',
-            'alert-type' => 'info'
+            'message' => 'Update ' . $categoryName . ' Successfully',
+            'alert-type' => 'success'
         ];
         return redirect()->route('all.category')->with($notification);
     } // end update method
+
+    public function CategoryDelete($id) {
+        $categoryName = Category::find($id)->category_name_en;
+        Category::find($id)->delete();
+        $notification = [
+            'message' => 'Delete ' . $categoryName . ' Successfully',
+            'alert-type' => 'success'
+        ];
+        return redirect()->back()->with($notification);
+    }
 
 }

@@ -24,7 +24,7 @@ class BrandController extends Controller
             'brand_image' => 'required',
         ], [
             'brand_name_en.required' => 'Input Brand English Name cannot be empty',
-            'brand_name_vn.required' => 'Input Brand Vietnames Name cannot be empty',
+            'brand_name_vn.required' => 'Input Brand Vietnamese Name cannot be empty',
             'brand_image.required' => 'Input Brand Image cannot be empty',
         ]);
 

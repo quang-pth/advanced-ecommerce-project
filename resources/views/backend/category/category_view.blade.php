@@ -53,12 +53,12 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                             <div class="table-responsive">
-                                <form action="{{ route('brand.store') }}" method="POST">
+                                <form action="{{ route('category.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group">
                                         <h5>Category English<span class="text-danger">*</span></h5>
                                         <div class="controls">
-                                            <input type="text" name="brand_name_en" class="form-control">
+                                            <input type="text" name="category_name_en" class="form-control">
                                             @error('category_name_en')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -67,7 +67,7 @@
                                     <div class="form-group">
                                         <h5>Category Vietnamese <span class="text-danger">*</span></h5>
                                         <div class="controls">
-                                            <input type="text" name="brand_name_vn" class="form-control">
+                                            <input type="text" name="category_name_vn" class="form-control">
                                             @error('category_name_vn')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -75,7 +75,7 @@
                                     </div><div class="form-group">
                                         <h5>Category Icon<span class="text-danger">*</span></h5>
                                         <div class="controls">
-                                            <input type="text" name="brand_name_vn" class="form-control">
+                                            <input type="text" name="category_icon" class="form-control">
                                             @error('category_icon')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror

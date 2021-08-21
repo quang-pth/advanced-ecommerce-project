@@ -48,6 +48,36 @@ class SubCategoryController extends Controller
         $categories = Category::orderBy('category_name_en', 'ASC')->get();
         $subCategory = SubCategory::findOrFail($id);
         return view('backend.category.subcategory_edit', compact('categories' , 'subCategory'));
-
     }
+
+    public function SubCategoryUpdate(Request $request) {
+        $request->validate([
+            'category_id' => 'required',
+            'subcategory_name_en' => 'required',
+            'subcategory_name_vn' => 'required',
+        ], [
+            'category_id.required' => 'Please select a category option',
+            'subcategory_name_en.required' => 'Input Sub-category English Name cannot be empty',
+            'subcategory_name_vn.required' => 'Input Sub-category Vietnamese Name cannot be empty',
+        ]);
+        $subcatId = $request->id;
+        $catToUpdateName = SubCategory::find($subcatId)->subcategory_name_en;
+        SubCategory::findOrFail($subcatId)->update([
+            'category_id' => $request->category_id,
+            'subcategory_name_en' => $request->subcategory_name_en,
+            'subcategory_name_vn' => $request->subcategory_name_vn,
+            'subcategory_slug_en' => strtolower(str_replace(' ', '-', $request->subcategory_name_en)),
+            'subcategory_slug_vn' => strtolower(str_replace(' ', '-', $request->subcategory_name_vn)),
+            'created_at' => Carbon::now(),
+        ]);
+
+        $notification = [
+            'message' => 'Update ' . $catToUpdateName . ' Successfully',
+            'alert-type' => 'info'
+        ];
+
+        return redirect()->route('all.subcategory')->with($notification);
+    } // end update method
+
+
 }

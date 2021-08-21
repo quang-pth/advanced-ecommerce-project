@@ -13,8 +13,9 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                             <div class="table-responsive">
-                                <form action="{{ route('subcategory.store') }}" method="POST">
+                                <form action="{{ route('subcategory.update') }}" method="POST">
                                     @csrf
+                                    <input type="hidden" name="id" value="{{ $subCategory->id }}">
                                     <div class="form-group">
                                         <h5>Category Select <span class="text-danger">*</span></h5>
                                         <div class="controls">

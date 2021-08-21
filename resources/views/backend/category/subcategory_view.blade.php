@@ -26,12 +26,12 @@
                                     @foreach($subCategories as $item)
                                         <tr>
 {{--                                            user relationship method to retrieve category name--}}
-                                            <td> <span>{{ $item['category']['category_name_en'] }}</td>
+                                            <td> <span>{{ $item->category->category_name_en }}</td>
                                             <td>{{ $item->subcategory_name_en }}</td>
                                             <td>{{ $item->subcategory_name_vn }}</td>
                                             <td>
                                                 <a href="{{ route('subcategory.edit', $item->id) }}" class="btn btn-info" title="Edit Data"><i class="fa fa-pencil"></i></a>
-                                                <a href="{{ route('category.delete', $item->id) }}" class="btn btn-danger" title="Delete Data" id="delete"><i class="fa fa-trash"></i></a>
+                                                <a href="{{ route('subcategory.delete', $item->id) }}" class="btn btn-danger" title="Delete Data" id="delete"><i class="fa fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

@@ -21,7 +21,7 @@
                                             <select name="category_id" class="form-control">
                                                 <option value="" selected="" disabled>Select Category</option>
                                                 @foreach($categories as $category)
-                                                    <option value="{{ $category->id }}">{{ $category->category_name_en }}</option>
+                                                    <option value="{{ $category->id }}" {{ $category->id === $subCategory->category_id ? "selected" : "" }}>{{ $category->category_name_en }}</option>
                                                 @endforeach
                                             </select>
                                             @error('category_id')
@@ -47,7 +47,7 @@
                                         </div>
                                     </div>
                                     <div class="text-xs-right">
-                                        <input type="submit" class="btn btn-rounded btn-primary mb-5" value="Add New">
+                                        <input type="submit" class="btn btn-rounded btn-primary mb-5" value="Update">
                                     </div>
                                 </form>
                             </div>

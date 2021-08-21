@@ -25,7 +25,8 @@
                                     <tbody>
                                     @foreach($subCategories as $item)
                                         <tr>
-                                            <td> <span>{{ $item->category_id }}</td>
+{{--                                            user relationship method to retrieve category name--}}
+                                            <td> <span>{{ $item['category']['category_name_en'] }}</td>
                                             <td>{{ $item->subcategory_name_en }}</td>
                                             <td>{{ $item->subcategory_name_vn }}</td>
                                             <td>

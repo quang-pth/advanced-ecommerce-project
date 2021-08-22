@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\SubCategory;
+use App\Models\SubSubCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -91,8 +92,9 @@ class SubCategoryController extends Controller
 
 //    Functions for SubSubCategory
     public function SubSubCategoryView() {
-
-
+        $categories = Category::orderBy('category_name_en', 'ASC')->get();
+        $subSubCategories = SubSubCategory::latest()->get();
+        return view('backend.category.sub_subcategory_view', compact('categories' , 'subSubCategories'));
     }
 
 

@@ -89,4 +89,11 @@ class SubCategoryController extends Controller
         return redirect()->back()->with($notification);
     }
 
+//    Functions for SubSubCategory
+    public function SubSubCategoryView() {
+
+
+    }
+
+
 }

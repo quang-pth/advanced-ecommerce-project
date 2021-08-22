@@ -55,7 +55,7 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="table-responsive">
-                            <form action="{{ route('subcategory.store') }}" method="POST">
+                            <form action="{{ route('subsubcategory.store') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
                                     <h5>Category Select <span class="text-danger">*</span></h5>

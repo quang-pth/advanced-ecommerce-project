@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\SubCategory;
 use App\Models\SubSubCategory;
 use Carbon\Carbon;
+use Illuminate\Http\Client\Events\RequestSending;
 use Illuminate\Http\Request;
 
 class SubCategoryController extends Controller
@@ -100,6 +101,37 @@ class SubCategoryController extends Controller
     public function GetSubCategory($category_id) {
         $subCategories = SubCategory::where('category_id', '=', $category_id)->orderBy('subcategory_name_en', 'ASC')->get();
         return json_encode($subCategories);
+    }
+
+    public function SubSubCategoryStore(Request $request) {
+        $request->validate([
+            'category_id' => 'required',
+            'subcategory_id' => 'required',
+            'subsubcategory_name_en' => 'required',
+            'subsubcategory_name_vn' => 'required',
+        ], [
+            'category_id.required' => 'Please select a category option',
+            'subcategory_id.required' => 'Please select a sub-category option',
+            'subcategory_name_en.required' => 'Input Category English Name cannot be empty',
+            'subcategory_name_vn.required' => 'Input Category Vietnamese Name cannot be empty',
+        ]);
+
+        SubSubCategory::insert([
+            'category_id' => $request->category_id,
+            'subcategory_id' => $request->subcategory_id,
+            'subsubcategory_name_en' => $request->subsubcategory_name_en,
+            'subsubcategory_name_vn' => $request->subsubcategory_name_vn,
+            'subsubcategory_slug_en' => strtolower(str_replace(' ', '-', $request->subsubcategory_name_en)),
+            'subsubcategory_slug_vn' => strtolower(str_replace(' ', '-', $request->subsubcategory_name_vn)),
+            'created_at' => Carbon::now(),
+        ]);
+
+        $notification = [
+            'message' => 'Add ' . $request->subsubcategory_name_en. ' Successfully',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->back()->with($notification);
     }
 
 

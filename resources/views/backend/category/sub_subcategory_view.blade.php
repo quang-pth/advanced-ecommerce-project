@@ -32,7 +32,7 @@
                                         <td>{{ $item->subsubcategory_name_en }}</td>
                                         <td width="30%">
                                             <a href="{{ route('subsubcategory.edit', $item->id) }}" class="btn btn-info" title="Edit Data"><i class="fa fa-pencil"></i></a>
-                                            <a href="{{ route('subcategory.delete', $item->id) }}" class="btn btn-danger" title="Delete Data" id="delete"><i class="fa fa-trash"></i></a>
+                                            <a href="{{ route('subsubcategory.delete', $item->id) }}" class="btn btn-danger" title="Delete Data" id="delete"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

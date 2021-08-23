@@ -88,8 +88,13 @@ Route::prefix('category')->group(function() {
     Route::post('/sub/sub/update', [SubCategoryController::class, 'SubSubCategoryUpdate'])->name('subsubcategory.update');
     Route::get('/sub/sub/delete/{id}', [SubCategoryController::class, 'SubSubCategoryDelete'])->name('subsubcategory.delete');
 
-
 });
+
+// Admin Brand All Route
+Route::prefix('product')->group(function() {
+    Route::get('/add');
+});
+
 
 
 

@@ -93,7 +93,7 @@ Route::prefix('category')->group(function() {
 
 // Admin Brand All Route
 Route::prefix('product')->group(function() {
-    Route::get('/add', [ProductController::class, 'AddProduct'])->name('add-product');
+    Route::get('/add', [ProductController::class, 'AddProduct'])->name('add.product');
 });
 
 

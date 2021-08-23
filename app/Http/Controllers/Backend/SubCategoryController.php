@@ -134,5 +134,12 @@ class SubCategoryController extends Controller
         return redirect()->back()->with($notification);
     }
 
+    public function SubSubCategoryEdit($id) {
+        $categories = Category::orderBy('category_name_en', 'ASC')->get();
+        $subCategories = SubCategory::orderBy('subcategory_name_en', 'ASC')->get();
+        $subSubCategory = SubSubCategory::findOrFail($id);
+        return view('backend.category.sub_subcategory_edit', compact('categories', 'subCategories', 'subSubCategory'));
+    }
+
 
 }

@@ -141,5 +141,38 @@ class SubCategoryController extends Controller
         return view('backend.category.sub_subcategory_edit', compact('categories', 'subCategories', 'subSubCategory'));
     }
 
+    public function SubSubCategoryUpdate(Request $request) {
+        $request->validate([
+            'category_id' => 'required',
+            'subcategory_id' => 'required',
+            'subsubcategory_name_en' => 'required',
+            'subsubcategory_name_vn' => 'required',
+        ], [
+            'category_id.required' => 'Please select a category option',
+            'subcategory_id.required' => 'Please select a sub category option',
+            'subsubcategory_name_en.required' => 'Input Sub-category English Name cannot be empty',
+            'subsubcategory_name_vn.required' => 'Input Sub-category Vietnamese Name cannot be empty',
+        ]);
+
+        $subSubCatId = $request->id;
+        $catToUpdateName = SubSubCategory::find($subSubCatId)->subsubcategory_name_en;
+        SubSubCategory::findOrFail($subSubCatId)->update([
+            'category_id' => $request->category_id,
+            'subcategory_id' => $request->subcategory_id,
+            'subsubcategory_name_en' => $request->subsubcategory_name_en,
+            'subsubcategory_name_vn' => $request->subsubcategory_name_vn,
+            'subsubcategory_slug_en' => strtolower(str_replace(' ', '-', $request->subsubcategory_name_en)),
+            'subsubcategory_slug_vn' => strtolower(str_replace(' ', '-', $request->subsubcategory_name_vn)),
+            'created_at' => Carbon::now(),
+        ]);
+
+        $notification = [
+            'message' => 'Update ' . $catToUpdateName . ' Successfully',
+            'alert-type' => 'info'
+        ];
+
+        return redirect()->route('all.subsubcategory')->with($notification);
+    }
+
 
 }

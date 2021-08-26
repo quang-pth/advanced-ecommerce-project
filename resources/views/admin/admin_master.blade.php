@@ -115,8 +115,10 @@
             })
         })
     })
-
 </script>
+
+{{--Tags Input Script--}}
+<script src="{{ asset('../assets/vendor_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.js') }}"></script>
 
 </body>
 </html>

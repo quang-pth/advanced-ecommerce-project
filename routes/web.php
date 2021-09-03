@@ -92,9 +92,11 @@ Route::prefix('category')->group(function() {
 
 });
 
-// Admin Brand All Route
+// Admin Product All Route
 Route::prefix('product')->group(function() {
     Route::get('/add', [ProductController::class, 'AddProduct'])->name('add.product');
+    Route::post('/store', [ProductController::class, 'StoreProduct'])->name('product-store');
+    Route::get('/manage', [ProductController::class, 'ManageProduct'])->name('manage-product');
 });
 
 

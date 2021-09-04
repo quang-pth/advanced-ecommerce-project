@@ -365,7 +365,7 @@
                                 <img src="{{ asset($img->photo_name) }}" class="card-img-top" style="height: 130px; width: 280px">
                                 <div class="card-body">
                                     <h5 class="card-title">
-                                        <a href="" class="btn btn-sm btn-danger" id="delete" title="Delete Data"><i class="fa fa-trash"></i></a>
+                                        <a href="{{ route('product.multiimg.delete', $img->id) }}" class="btn btn-sm btn-danger" id="delete" title="Delete Data"><i class="fa fa-trash"></i></a>
                                     </h5>
                                     <p class="card-text">
                                         <div class="form-group">
@@ -433,7 +433,6 @@
                     {{--                    end row-sm--}}
                     <div class="text-xs-right">
                         <input type="submit" class="btn btn-rounded btn-primary mb-5" value="Update Thumbnail">
-
                     </div>
 
                     <br><br>
@@ -510,7 +509,7 @@
 
 <script>
     $(document).ready(function(){
-        $('#multiImg').on('change', function(){ //on file input change
+        $('#multiImg').on('change', function() { //on file input change
             if (window.File && window.FileReader && window.FileList && window.Blob) //check File API supported browser
             {
                 const data = $(this)[0].files; //this file data

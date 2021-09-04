@@ -134,6 +134,21 @@ class ProductController extends Controller
         return redirect()->route('manage-product')->with($notification);
     } // end update method
 
+    public function showProductDetails($id) {
+        $productToShow = Product::findOrFail($id);
+//        dd($productToShow);
+        $brand = Brand::where('id', '=', $productToShow->brand_id)->first();
+//        dd($brand);
+        $category =Category::where('id', '=', $productToShow->category_id)->first();
+        $subCategory = SubCategory::where('id', '=', $productToShow->subcategory_id)->first();
+        $subSubCategory = SubSubCategory::where('id', '=', $productToShow->subsubcategory_id)->first();
+        $product = Product::findOrFail($id);
+        $multiImgs = MultiImg::where('product_id', '=', $id)->get();
+
+        return view('backend.product.product_details', compact('brand', 'category', 'subCategory', 'subSubCategory', 'product', 'multiImgs'));
+
+    }
+
     public function MultiImageUpdate(Request $request) {
         $imgs =  $request->file('multi_img');
         foreach ($imgs as $id => $img) {

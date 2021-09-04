@@ -90,8 +90,9 @@ class ProductController extends Controller
         $subCategories = SubCategory::latest()->get();
         $subSubCategories = SubSubCategory::latest()->get();
         $product = Product::findOrFail($id);
+        $multiImgs = MultiImg::where('product_id', '=', $id)->get();
 
-        return view('backend.product.product_edit', compact('brands', 'categories', 'subCategories', 'subSubCategories', 'product'));
+        return view('backend.product.product_edit', compact('brands', 'categories', 'subCategories', 'subSubCategories', 'product', 'multiImgs'));
     } // end mange product method
 
     public function ProductDataUpdate(Request $request) {
@@ -132,5 +133,49 @@ class ProductController extends Controller
 
         return redirect()->route('manage-product')->with($notification);
     } // end update method
+
+    public function MultiImageUpdate(Request $request) {
+        $imgs =  $request->file('multi_img');
+        foreach ($imgs as $id => $img) {
+//            delete old image
+            $imgToDelete = MultiImg::findOrFail($id);
+            unlink($imgToDelete->photo_name);
+//            replace old images with new ones
+            $name_gen = hexdec(uniqid()).'.'.$img->getClientOriginalExtension();
+            Image::make($img)->resize(917, 1000)->save('upload/products/multi-image/'.$name_gen);
+            $uploadPath = 'upload/products/multi-image/'.$name_gen;
+            MultiImg::where('id', '=', $id)->update([
+               'photo_name' => $uploadPath,
+            ]);
+        } // end foreach
+        $notification = [
+            'message' => 'Product Images Updated Successfully',
+            'alert-type' => 'info'
+        ];
+
+        return redirect()->back()->with($notification);
+    }
+//    end multi image update method
+    public function ThumbnailImageUpdate(Request $request) {
+        $productId = $request->id;
+        $oldImgToDelete = $request->old_img;
+//        delete old img in public folder
+        $img = $request->file('product_thumbnail');
+        unlink($oldImgToDelete);
+//        store new thumbnail
+        $name_gen = hexdec(uniqid()).'.'.$img->getClientOriginalExtension();
+        Image::make($img)->resize(917, 1000)->save('upload/products/thumbnail/'.$name_gen);
+        $uploadPath = 'upload/products/thumbnail/'.$name_gen;
+        Product::where('id', '=', $productId)->update([
+            'product_thumbnail' => $uploadPath,
+        ]);
+
+        $notification = [
+            'message' => 'Product Thumbnail Updated Successfully',
+            'alert-type' => 'info'
+        ];
+
+        return redirect()->back()->with($notification);
+    }
 
 }

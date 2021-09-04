@@ -1,5 +1,13 @@
 @extends('admin.admin_master')
 @section('admin')
+    <style>
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            text-indent: 1px;
+            text-overflow: '';
+        }
+    </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <div class="container-full">
     <!-- Content Header (Page header) -->

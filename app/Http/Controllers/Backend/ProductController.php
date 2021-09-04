@@ -191,5 +191,26 @@ class ProductController extends Controller
         return redirect()->back()->with($notification);
     } // end multi image delete
 
+    public function InactiveProduct($id) {
+        Product::findOrFail($id)->update([
+            'status' => 0,
+        ]);
+        $notification = [
+            'message' => 'Inactive Product Successfully',
+            'alert-type' => 'success'
+        ];
+        return redirect()->back()->with($notification);
+    }
+
+    public function ActiveProduct($id) {
+        Product::findOrFail($id)->update([
+            'status' => 1,
+        ]);
+        $notification = [
+            'message' => 'Active Product Successfully',
+            'alert-type' => 'success'
+        ];
+        return redirect()->back()->with($notification);
+    }
 
 }

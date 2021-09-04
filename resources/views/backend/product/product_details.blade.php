@@ -308,7 +308,7 @@
                             @foreach($multiImgs as $img)
                                 <div class="col-md-3">
                                     <div class="card" style="width: 18rem;">
-                                        <img src="{{ asset($img->photo_name) }}" class="card-img-top" style="height: 130px; width: 280px">
+                                        <img src="{{ asset($img->photo_name) }}" class="card-img-top" style="height: 400px; width: 400px">
                                     </div>
                                 </div>
                             @endforeach
@@ -339,7 +339,7 @@
                         <div class="row row-sm">
                             <div class="col-md-3">
                                 <div class="card" style="width: 18rem;">
-                                    <img src="{{ asset($product->product_thumbnail) }}" class="card-img-top" style="height: 130px; width: 280px">
+                                    <img src="{{ asset($product->product_thumbnail) }}" class="card-img-top" style="height: 400px; width: 400px">
                                 </div>
                             </div>
                             {{--                        end col-md-3 --}}
@@ -441,36 +441,3 @@
 </script>
 
 @endsection
-
-{{--multi
-
-                                        <div class="form-group">
-                                            <h5>Multiple Images<span class="text-danger">*</span></h5>
-                                            <div class="controls">
-                                                <input type="file" name="multi_img[]" class="form-control" multiple="" id="multiImg" required>
-                                            </div>
-                                            @error('multi_img')
-                                            <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                            <div class="row" id="preview_img">
-
-                                            </div>
-                                        </div>
-
---}}
-
-{{--main image
-
-                                        <div class="form-group">
-                                            <h5>Main Thumbnail<span class="text-danger">*</span></h5>
-                                            <div class="controls">
-                                                <input type="file" name="product_thumbnail" class="form-control" onChange="mainThumbnailUrl(this)" required>
-                                            </div>
-                                            @error('product_thumbnail')
-                                            <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                            <img src="" id="mainThumb" alt="">
-                                        </div>
-
-
---}}

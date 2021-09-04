@@ -105,6 +105,7 @@ Route::prefix('product')->group(function() {
     Route::get('/inactive/{id}', [ProductController::class, 'InactiveProduct'])->name('product.inactive');
     Route::get('/active/{id}', [ProductController::class, 'ActiveProduct'])->name('product.active');
     Route::get('/detail/{id}', [ProductController::class, 'showProductDetails'])->name('product.detail');
+    Route::get('/delete/{id}', [ProductController::class, 'deleteProduct'])->name('product.delete');
 
 
 });

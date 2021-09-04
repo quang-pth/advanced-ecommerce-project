@@ -12,6 +12,7 @@ use App\Models\SubSubCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
+use PhpParser\Node\Expr\AssignOp\Mul;
 
 class ProductController extends Controller
 {
@@ -225,6 +226,27 @@ class ProductController extends Controller
             'message' => 'Active Product Successfully',
             'alert-type' => 'success'
         ];
+        return redirect()->back()->with($notification);
+    }
+
+    public function deleteProduct($id) {
+        $productToDelete = Product::findOrFail($id);
+//            delete image in public folder
+        unlink($productToDelete->product_thumbnail);
+//        delete product in database
+        Product::findOrFail($id)->delete();
+//      delete multiple images
+        $images = MultiImg::where('product_id', '=', $id)->get();
+        foreach ($images as $image) {
+            unlink($image->photo_name);
+            $image->delete();
+        }
+
+        $notification = [
+            'message' => 'Product Deleted Successfully',
+            'alert-type' => 'success'
+        ];
+
         return redirect()->back()->with($notification);
     }
 

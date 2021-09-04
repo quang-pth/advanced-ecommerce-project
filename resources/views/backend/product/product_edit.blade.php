@@ -362,7 +362,7 @@
                         @foreach($multiImgs as $img)
                         <div class="col-md-3">
                             <div class="card" style="width: 18rem;">
-                                <img src="{{ asset($img->photo_name) }}" class="card-img-top" style="height: 130px; width: 280px">
+                                <img src="{{ asset($img->photo_name) }}" class="card-img-top" style="height: 400px; width: 400px">
                                 <div class="card-body">
                                     <h5 class="card-title">
                                         <a href="{{ route('product.multiimg.delete', $img->id) }}" class="btn btn-sm btn-danger" id="delete" title="Delete Data"><i class="fa fa-trash"></i></a>
@@ -415,7 +415,7 @@
                     <div class="row row-sm">
                             <div class="col-md-3">
                                 <div class="card" style="width: 18rem;">
-                                    <img src="{{ asset($product->product_thumbnail) }}" class="card-img-top" style="height: 130px; width: 280px">
+                                    <img src="{{ asset($product->product_thumbnail) }}" class="card-img-top" style="height: 400px; width: 400px">
                                     <div class="card-body">
                                         <p class="card-text">
                                         <div class="form-group">

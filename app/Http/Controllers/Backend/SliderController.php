@@ -85,4 +85,26 @@ class SliderController extends Controller
         ];
         return redirect()->back()->with($notification);
     } // end deleteSlider method
+
+    public function inactiveSlider($id) {
+        Slider::findOrFail($id)->update([
+            'status' => 0
+        ]);
+        $notification = [
+            'message' => 'Slider Inactive Successfully',
+            'alert-type' => 'info'
+        ];
+        return redirect()->back()->with($notification);
+    } // end inactiveSlider method
+
+    public function activeSlider($id) {
+        Slider::findOrFail($id)->update([
+            'status' => 1
+        ]);
+        $notification = [
+            'message' => 'Slider Inactive Successfully',
+            'alert-type' => 'info'
+        ];
+        return redirect()->back()->with($notification);
+    } // end inactiveSlider method
 }

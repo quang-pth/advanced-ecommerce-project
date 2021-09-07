@@ -1,42 +1,92 @@
 <header class="header-style-1">
-
     <!-- ============================================== TOP MENU ============================================== -->
     <div class="top-bar animate-dropdown">
         <div class="container">
             <div class="header-top-inner">
                 <div class="cnt-account">
                     <ul class="list-unstyled">
-                        <li><a href="#"><i class="icon fa fa-user"></i>My Account</a></li>
-                        <li><a href="#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
-                        <li><a href="#"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
-                        <li><a href="#"><i class="icon fa fa-check"></i>Checkout</a></li>
+                        <li><a href="#"><i class="icon fa fa-user"></i>
+                                @if(session()->get('language') == 'vietnamese')
+                                    Tài khoản
+                                @else
+                                    My Account
+                                @endif
+                            </a></li>
+                        <li><a href="#"><i class="icon fa fa-heart"></i>
+                                @if(session()->get('language') == 'vietnamese')
+                                    Danh sách mong muốn
+                                @else
+                                    Wishlist
+                                @endif
+                            </a></li>
+                        <li><a href="#"><i class="icon fa fa-shopping-cart"></i>
+                                @if(session()->get('language') == 'vietnamese')
+                                    Giỏ hàng
+                                @else
+                                    My Cart
+                                @endif</a></li>
+                        <li><a href="#"><i class="icon fa fa-check"></i>
+                                @if(session()->get('language') == 'vietnamese')
+                                    Thanh toán
+                                @else
+                                    Checkout
+                                @endif
+                            </a></li>
                         <li>
                             @auth
-                                  <a href="{{ route('login') }}"><i class="icon fa fa-user"></i>User Profile</a>
+                                  <a href="{{ route('login') }}"><i class="icon fa fa-user"></i>
+                                      @if(session()->get('language') == 'vietnamese')
+                                          Thông tin người dùng
+                                      @else
+                                          User Profile
+                                      @endif</a>
                             @else
-                                  <a href="{{ route('login') }}"><i class="icon fa fa-lock"></i>Login/Register</a>
+                                  <a href="{{ route('login') }}"><i class="icon fa fa-lock"></i>
+                                      @if(session()->get('language') == 'vietnamese')
+                                          Đăng nhập/Đăng kí
+                                      @else
+                                          Login/Register
+                                      @endif
+                                  </a>
                             @endauth
                         </li>
-
-
                     </ul>
                 </div>
                 <!-- /.cnt-account -->
-
                 <div class="cnt-block">
                     <ul class="list-unstyled list-inline">
-                        <li class="dropdown dropdown-small"> <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown"><span class="value">USD </span><b class="caret"></b></a>
+                        <li class="dropdown dropdown-small">
+                            <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">
+                                <span class="value">
+                                @if(session()->get('language') == 'vietnamese')
+                                        VNĐ
+                                    @else
+                                        USD
+                                    @endif
+                                </span><b class="caret"></b>
+                            </a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">USD</a></li>
                                 <li><a href="#">INR</a></li>
                                 <li><a href="#">GBP</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown dropdown-small"> <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown"><span class="value">English </span><b class="caret"></b></a>
+                        <li class="dropdown dropdown-small">
+                            <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">
+                                <span class="value">
+                                    @if(session()->get('language') == 'vietnamese')
+                                        Ngôn ngữ
+                                    @else
+                                        Language
+                                    @endif
+                                </span><b class="caret"></b>
+                            </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">English</a></li>
-                                <li><a href="#">French</a></li>
-                                <li><a href="#">German</a></li>
+                                @if(session()->get('language') == 'vietnamese')
+                                    <li><a href="{{ route('english.language') }}">English</a></li>
+                                @else
+                                    <li><a href="{{ route('vietnamese.language') }}">Tiếng Việt</a></li>
+                                @endif
                             </ul>
                         </li>
                     </ul>

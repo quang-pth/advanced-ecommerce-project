@@ -9,6 +9,8 @@ class SubCategory extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'category_id',
         'subcategory_name_en',
@@ -19,5 +21,9 @@ class SubCategory extends Model
 
     public function category() {
         return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    public function subSubCategory() {
+        return $this->hasMany(subSubCategory::class, 'subcategory_id', 'id');
     }
 }

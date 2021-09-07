@@ -199,7 +199,13 @@
                         <div class="nav-outer">
                             <ul class="nav navbar-nav">
                                 <li class="active dropdown yamm-fw">
-                                    <a href="{{ url('/') }}" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Home</a>
+                                    <a href="{{ url('/') }}" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">
+                                        @if(session()->get('language') == 'vietnamese')
+                                            Nhà
+                                        @else
+                                            Home
+                                        @endif
+                                    </a>
                                 </li>
                                 @php
                                     $categories = App\Models\Category::orderBy('category_name_en', 'ASC')->get();
@@ -207,7 +213,13 @@
                                 @endphp
                                 @foreach($categories as $category)
                                     <li class="dropdown yamm mega-menu">
-                                    <a href="home.html" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">{{ $category->category_name_en }}</a>
+                                    <a href="home.html" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">
+                                        @if(session()->get('language') == 'vietnamese')
+                                            {{ $category->category_name_vn }}
+                                        @else
+                                            {{ $category->category_name_en }}
+                                        @endif
+                                        </a>
                                     <ul class="dropdown-menu container">
 {{--                                        Get SubCategory Data--}}
                                         @php
@@ -218,13 +230,26 @@
                                                 <div class="row">
                                                     @foreach($subCategories as $subCategory)
                                                     <div class="col-xs-12 col-sm-6 col-md-2 col-menu">
-                                                        <h2 class="title">{{ $subCategory->subcategory_name_en }}</h2>
+                                                        <h2 class="title">
+                                                            @if(session()->get('language') == 'vietnamese')
+                                                                {{ $subCategory->subcategory_name_vn }}
+                                                            @else
+                                                                {{ $subCategory->subcategory_name_en }}
+                                                            @endif
+                                                        </h2>
                                                         @php
                                                             $subSubCategories = $subCategory->subSubCategory;
                                                         @endphp
                                                         @foreach($subSubCategories as $subSubCategory)
                                                             <ul class="links">
-                                                                <li><a href="#">{{ $subSubCategory->subsubcategory_name_en }}</a></li>
+                                                                <li><a href="#">
+                                                                    @if(session()->get('language') == 'vietnamese')
+                                                                        {{ $subSubCategory->subsubcategory_name_vn }}
+                                                                    @else
+                                                                        {{ $subSubCategory->subsubcategory_name_en }}
+                                                                    @endif
+                                                                    </a>
+                                                                </li>
                                                             </ul>
                                                         @endforeach
                                                     </div>

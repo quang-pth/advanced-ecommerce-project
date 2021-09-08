@@ -50,8 +50,6 @@ class BrandController extends Controller
         ];
 
         return redirect()->back()->with($notification);
-
-
     } // end method
 
     public function BrandEdit($id) {

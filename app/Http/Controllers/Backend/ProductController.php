@@ -170,8 +170,29 @@ class ProductController extends Controller
         ];
 
         return redirect()->back()->with($notification);
-    }
-//    end multi image update method
+    } //    end multi image update method
+
+    public function addImagesOnEditPage(Request $request, $productId) {
+        $imgs =  $request->file('multi_img');
+        if (!empty($imgs)) {
+            foreach ($imgs as $id => $img) {
+                $name_gen = hexdec(uniqid()).'.'.$img->getClientOriginalExtension();
+                Image::make($img)->resize(917, 1000)->save('upload/products/multi-image/'.$name_gen);
+                $uploadPath = 'upload/products/multi-image/'.$name_gen;
+                MultiImg::insert([
+                    'product_id' => $productId,
+                    'photo_name' => $uploadPath,
+                    'created_at' => Carbon::now(),
+                ]);
+            } // end foreach
+            $notification = [
+                'message' => 'Product Images Add Successfully',
+                'alert-type' => 'info'
+            ];
+            return redirect()->back()->with($notification);
+        }
+    } // add images on edit page
+
     public function ThumbnailImageUpdate(Request $request) {
         $productId = $request->id;
         $oldImgToDelete = $request->old_img;

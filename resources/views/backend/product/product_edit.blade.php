@@ -372,7 +372,6 @@
                                         <label class="form-control-label">Change Image <span class="tx-danger">*</span></label>
 {{--                                        attach id img to replace --}}
                                         <input class="form-control" type="file" name="multi_img[{{$img->id}}]">
-
                                         </div>
                                     </p>
                                 </div>
@@ -384,21 +383,57 @@
 {{--                    end row-sm--}}
                     <div class="text-xs-right">
                         <input type="submit" class="btn btn-rounded btn-primary mb-5" value="Update Image">
-
                     </div>
-
                     <br><br>
-
-
-
                 </form>
             </div>
         </div>
 
     </div>
 {{--    end row--}}
+{{--    Start Add New Image--}}
 </section>
-{{--    end multi image section--}}
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box bt-3 border-info">
+                    <div class="box-header">
+                        <h4 class="box-title">Add Product Image <strong>Update</strong></h4>
+                    </div>
+                    <form action="{{ route('add.product.images', $product->id) }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row row-sm">
+                            <div class="col-md-3">
+                                <div class="card" style="width: 18rem;">
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Add Image <span class="tx-danger">*</span></label>
+                                            {{--                                        attach id img to replace --}}
+                                            <div class="controls">
+                                                <input type="file" name="multi_img[]" class="form-control" multiple="" id="multiImg" required>
+                                            </div>
+                                            <img src="" id="imageToAdd" alt="">
+                                        </div>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            {{--                        end col-md-3 --}}
+                        </div>
+                        {{--                    end row-sm--}}
+                        <div class="text-xs-right">
+                            <input type="submit" class="btn btn-rounded btn-primary mb-5" value="Add Images">
+                        </div>
+                        <br><br>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        {{--    end row--}}
+    </section>
+{{--    End Add New Image--}}
 
 {{--    Start Thumbnail Image Update Area --}}
 <section class="content">
@@ -434,11 +469,7 @@
                     <div class="text-xs-right">
                         <input type="submit" class="btn btn-rounded btn-primary mb-5" value="Update Thumbnail">
                     </div>
-
                     <br><br>
-
-
-
                 </form>
             </div>
         </div>
@@ -535,36 +566,3 @@
 </script>
 
 @endsection
-
-{{--multi
-
-                                            <div class="form-group">
-                                                <h5>Multiple Images<span class="text-danger">*</span></h5>
-                                                <div class="controls">
-                                                    <input type="file" name="multi_img[]" class="form-control" multiple="" id="multiImg" required>
-                                                </div>
-                                                @error('multi_img')
-                                                <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                                <div class="row" id="preview_img">
-
-                                                </div>
-                                            </div>
-
---}}
-
-{{--main image
-
-                                            <div class="form-group">
-                                                <h5>Main Thumbnail<span class="text-danger">*</span></h5>
-                                                <div class="controls">
-                                                    <input type="file" name="product_thumbnail" class="form-control" onChange="mainThumbnailUrl(this)" required>
-                                                </div>
-                                                @error('product_thumbnail')
-                                                <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                                <img src="" id="mainThumb" alt="">
-                                            </div>
-
-
---}}

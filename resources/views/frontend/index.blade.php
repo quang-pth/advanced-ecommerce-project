@@ -956,7 +956,7 @@
                                                 <!-- /.product-image -->
 
                                                 <div class="product-info text-left">
-                                                    <h3 class="name"><a href="detail.html">
+                                                    <h3 class="name"><a href="{{ url('product/details/'.$product->id.'/'.$product->product_slug_en ) }}">
                                                             @if(session()->get('language') == 'vietnamese')
                                                                 {{ $product->product_name_vn }}
                                                             @else

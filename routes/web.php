@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\LanguageController;
+use App\Http\Controllers\Frontend\ProductDetailsController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -105,6 +106,7 @@ Route::middleware(['auth:admin'])->group(function() {
         Route::post('/data/update', [ProductController::class, 'ProductDataUpdate'])->name('product-update');
         Route::post('/image/update', [ProductController::class, 'MultiImageUpdate'])->name('update-product-image');
         Route::post('/thumbnail/update', [ProductController::class, 'ThumbnailImageUpdate'])->name('update-product-thumbnail');
+        Route::post('/images/add/{productId}', [ProductController::class, 'addImagesOnEditPage'])->name('add.product.images');
         Route::get('/multiimg/delete/{id}', [ProductController::class, 'MultiImageDelete'])->name('product.multiimg.delete');
         Route::get('/inactive/{id}', [ProductController::class, 'InactiveProduct'])->name('product.inactive');
         Route::get('/active/{id}', [ProductController::class, 'ActiveProduct'])->name('product.active');
@@ -130,4 +132,6 @@ Route::middleware(['auth:admin'])->group(function() {
 // Multi Language Routes
 Route::get('/language/vietnamese', [LanguageController::class, 'renderVietnamese'])->name('vietnamese.language');
 Route::get('/language/english', [LanguageController::class, 'renderEnglish'])->name('english.language');
+// Product Details Page URL
+Route::get('/product/details/{id}/{slug}', [ProductDetailsController::class, 'showDetails']);
 

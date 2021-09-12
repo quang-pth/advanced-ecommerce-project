@@ -22,7 +22,9 @@ class IndexController extends Controller
         $featuredProducts = Product::where('featured', '=', 1)->orderBy('id', 'DESC')->get();
         $hotDealsProducts = Product::where('hot_deals', '=', 1)->orderBy('id', 'DESC')->get();
         $specialOfferProducts = Product::where('special_offer', '=', 1)->orderBy('id', 'DESC')->get();
-        return view('frontend.index', compact('categories', 'sliders', 'products', 'featuredProducts', 'hotDealsProducts', 'specialOfferProducts'));
+        $specialDealProducts = Product::where('special_deals', '=', 1)->orderBy('id', 'DESC')->get();
+        return view('frontend.index', compact('categories', 'sliders', 'products',
+            'featuredProducts', 'hotDealsProducts', 'specialOfferProducts', 'specialDealProducts'));
     }
 
     public function UserLogout() {

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Slider;
 use App\Models\User;
+use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -20,11 +22,28 @@ class IndexController extends Controller
         $products = Product::where('status', '=', 1)->orderBy('id', 'DESC')->get();
 //        show featured products
         $featuredProducts = Product::where('featured', '=', 1)->orderBy('id', 'DESC')->get();
-        $hotDealsProducts = Product::where('hot_deals', '=', 1)->orderBy('id', 'DESC')->get();
+        $hotDealsProducts = Product::where('hot_deals', '=', 1)->where('discount_price', '!=', NULL)->orderBy('id', 'DESC')->get();
         $specialOfferProducts = Product::where('special_offer', '=', 1)->orderBy('id', 'DESC')->get();
         $specialDealProducts = Product::where('special_deals', '=', 1)->orderBy('id', 'DESC')->get();
+
+        $categorizedProducts =  $this->categorizeProduct();
+//      display second brand products
+        $skipBrand1 = Brand::skip(1)->first();
+        $skipBrandProduct1 = Product::where('status', '=', 1)->where('brand_id', '=', $skipBrand1->id)->orderBy('id', 'DESC')->get();
+
         return view('frontend.index', compact('categories', 'sliders', 'products',
-            'featuredProducts', 'hotDealsProducts', 'specialOfferProducts', 'specialDealProducts'));
+            'featuredProducts', 'hotDealsProducts', 'specialOfferProducts', 'specialDealProducts', 'categorizedProducts', 'skipBrand1', 'skipBrandProduct1'
+        ));
+    }
+
+    public function categorizeProduct() {
+        $categoryCounts = count(Category::get());
+        $categorizedProducts = [];
+        for($idx = 0; $idx < $categoryCounts; $idx++) {
+            $product = Category::skip($idx)->first()->product->where('status', 1)->sortDesc();
+             array_push($categorizedProducts, $product);
+        }
+        return $categorizedProducts;
     }
 
     public function UserLogout() {

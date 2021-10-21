@@ -8,7 +8,6 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Slider;
 use App\Models\User;
-use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -111,5 +110,11 @@ class IndexController extends Controller
             ];
             return redirect()->back()->with($notification);
         }
+    }
+
+    public function TagWiseProduct($tag) {
+        $products = Product::where('status', 1)->where('product_tags_en', $tag)->orWhere('product_tags_vn', $tag)->orderBy('id', 'DESC')->paginate(3);
+        $categories = Category::orderBy('category_name_en', 'DESC')->get();
+        return view('frontend.tags.tags_view', compact('products', 'categories'));
     }
 }

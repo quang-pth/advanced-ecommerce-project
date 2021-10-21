@@ -21,7 +21,6 @@ class IndexController extends Controller
         $products = Product::where('status', '=', 1)->orderBy('id', 'DESC')->get();
 //        show featured products
         $featuredProducts = Product::where('featured', '=', 1)->orderBy('id', 'DESC')->get();
-        $hotDealsProducts = Product::where('hot_deals', '=', 1)->where('discount_price', '!=', NULL)->orderBy('id', 'DESC')->get();
         $specialOfferProducts = Product::where('special_offer', '=', 1)->orderBy('id', 'DESC')->get();
         $specialDealProducts = Product::where('special_deals', '=', 1)->orderBy('id', 'DESC')->get();
 
@@ -31,7 +30,7 @@ class IndexController extends Controller
         $skipBrandProduct1 = Product::where('status', '=', 1)->where('brand_id', '=', $skipBrand1->id)->orderBy('id', 'DESC')->get();
 
         return view('frontend.index', compact('categories', 'sliders', 'products',
-            'featuredProducts', 'hotDealsProducts', 'specialOfferProducts', 'specialDealProducts', 'categorizedProducts', 'skipBrand1', 'skipBrandProduct1'
+            'featuredProducts', 'specialOfferProducts', 'specialDealProducts', 'categorizedProducts', 'skipBrand1', 'skipBrandProduct1'
         ));
     }
 

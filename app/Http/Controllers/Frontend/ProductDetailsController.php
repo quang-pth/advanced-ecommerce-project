@@ -26,7 +26,10 @@ class ProductDetailsController extends Controller
         $product_size_vn = explode(',', $size_vn);
 
         $multiImg = MultiImg::where('product_id', '=', $productToShowId)->get();
+
+        $product_category_id = $product->category_id;
+        $relatedProducts = Product::where('category_id', $product_category_id)->where('id', '!=', $productToShowId)->orderBy('id', 'DESC')->get();
         return view('frontend.product.product_details', compact('product', 'multiImg', 'product_color_en',
-            'product_color_vn',  'product_size_en', 'product_size_vn'));
+            'product_color_vn',  'product_size_en', 'product_size_vn', 'relatedProducts'));
     }
 }

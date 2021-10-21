@@ -135,3 +135,12 @@ Route::get('/language/english', [LanguageController::class, 'renderEnglish'])->n
 // Product Details Page URL
 Route::get('/product/details/{id}/{slug}', [ProductDetailsController::class, 'showDetails']);
 
+// Frontend Product Tags
+Route::get('product/tag/{tag}', [IndexController::class, 'TagWiseProduct']);
+
+// Frontend Subcategory wise Data
+Route::get('subcategory/product/{subcate_id}/{slug}', [IndexController::class, 'SubCategoryWiseProduct']);
+
+// Frontend SubSubcategory wise Data
+Route::get('subsubcategory/product/{subSubCate_id}/{slug}', [IndexController::class, 'SubSubCategoryWiseProduct']);
+

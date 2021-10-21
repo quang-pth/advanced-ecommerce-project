@@ -8,7 +8,6 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Slider;
 use App\Models\User;
-use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -22,7 +21,6 @@ class IndexController extends Controller
         $products = Product::where('status', '=', 1)->orderBy('id', 'DESC')->get();
 //        show featured products
         $featuredProducts = Product::where('featured', '=', 1)->orderBy('id', 'DESC')->get();
-        $hotDealsProducts = Product::where('hot_deals', '=', 1)->where('discount_price', '!=', NULL)->orderBy('id', 'DESC')->get();
         $specialOfferProducts = Product::where('special_offer', '=', 1)->orderBy('id', 'DESC')->get();
         $specialDealProducts = Product::where('special_deals', '=', 1)->orderBy('id', 'DESC')->get();
 
@@ -32,7 +30,7 @@ class IndexController extends Controller
         $skipBrandProduct1 = Product::where('status', '=', 1)->where('brand_id', '=', $skipBrand1->id)->orderBy('id', 'DESC')->get();
 
         return view('frontend.index', compact('categories', 'sliders', 'products',
-            'featuredProducts', 'hotDealsProducts', 'specialOfferProducts', 'specialDealProducts', 'categorizedProducts', 'skipBrand1', 'skipBrandProduct1'
+            'featuredProducts', 'specialOfferProducts', 'specialDealProducts', 'categorizedProducts', 'skipBrand1', 'skipBrandProduct1'
         ));
     }
 
@@ -112,4 +110,25 @@ class IndexController extends Controller
             return redirect()->back()->with($notification);
         }
     }
+
+    public function TagWiseProduct($tag) {
+        $products = Product::where('status', 1)->where('product_tags_en', $tag)->orWhere('product_tags_vn', $tag)->orderBy('id', 'DESC')->paginate(3);
+        $categories = Category::orderBy('category_name_en', 'DESC')->get();
+        return view('frontend.tags.tags_view', compact('products', 'categories'));
+    }
+
+//    subcategory wise data
+    public function SubCategoryWiseProduct($subcate_id, $slug) {
+        $products = Product::where('status', 1)->where('subcategory_id', $subcate_id)->orderBy('id', 'DESC')->paginate(6);
+        $categories = Category::orderBy('category_name_en', 'DESC')->get();
+        return view('frontend.product.subcategory_view', compact('products', 'categories'));
+    }
+
+//    sub-sub category data
+    public function SubSubCategoryWiseProduct($subSubCate_id, $slug) {
+        $products = Product::where('status', 1)->where('subsubcategory_id', $subSubCate_id)->orderBy('id', 'DESC')->paginate(6);
+        $categories = Category::orderBy('category_name_en', 'DESC')->get();
+        return view('frontend.product.subsubcategory_view', compact('products', 'categories'));
+    }
+
 }

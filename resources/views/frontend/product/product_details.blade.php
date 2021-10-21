@@ -400,8 +400,47 @@
                                             </div>
                                         </div>
 
-                                    </div><!-- /.row -->
+                                    </div><!-- /.END row -->
                                 </div><!-- /.price-container -->
+
+{{--                                ADD PRODUCT COLOR AND SIZE --}}
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="info-title control-label">Choose Color</label>
+                                            <select class="form-control unicase-form-control selectpicker">
+                                                <option selected="" disabled>--Color--</option>
+                                                @php
+                                                    $product_color = session()->get('language') == 'vietnamese' ? $product_color_vn : $product_color_en;
+                                                @endphp
+                                                @foreach($product_color as $color)
+                                                    <option value="{{ $color }}">{{ $color }}</option>
+                                                @endforeach
+                                                </select>
+                                        </div>
+{{--                                        END form group --}}
+                                    </div>
+{{--                                    END col 6--}}
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="info-title control-label">Choose Size</label>
+                                            <select class="form-control unicase-form-control selectpicker">
+                                                <option selected="" disabled>--Size--</option>
+                                                @php
+                                                    $product_size = session()->get('language') == 'vietnamese' ? $product_size_vn : $product_size_en;
+                                                @endphp
+                                                @foreach($product_size as $size)
+                                                    <option value="{{ $size }}">{{ $size }}</option>
+                                                @endforeach
+                                            </select>
+                                            </select>
+                                        </div>
+                                        {{--                                        END form group --}}
+                                    </div>
+{{--                                    END col 6--}}
+
+                                </div><!-- /.row -->
+                                {{--                                END PRODUCT COLOR AND SIZE --}}
 
                                 <div class="quantity-container info-container">
                                     <div class="row">

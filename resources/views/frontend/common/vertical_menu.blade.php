@@ -26,19 +26,22 @@
                                 @endphp
                                 @foreach($subCategories as $subCategory)
                                     <div class="col-sm-12 col-md-3">
-                                        <h2 class="title">
-                                            @if(session()->get('language') == 'vietnamese')
-                                                {{ $subCategory->subcategory_name_vn }}
-                                            @else
-                                                {{ $subCategory->subcategory_name_en }}
-                                            @endif
-                                        </h2>
+                                        <a href="{{ url('subcategory/product/'.$subCategory->id.'/'.$subCategory->subcategory_slug_en) }}">
+                                            <h2 class="title">
+                                                @if(session()->get('language') == 'vietnamese')
+                                                    {{ $subCategory->subcategory_name_vn }}
+                                                @else
+                                                    {{ $subCategory->subcategory_name_en }}
+                                                @endif
+                                            </h2>
+                                        </a>
                                         @php
                                             $subSubCategories = $subCategory->subSubCategory;
                                         @endphp
                                         @foreach($subSubCategories as $subSubCategory)
                                             <ul class="links list-unstyled">
-                                                <li> <a href="#">
+                                                <li>
+                                                    <a href="{{ url('subsubcategory/product/'.$subSubCategory->id.'/'.$subSubCategory->subsubcategory_slug_en) }}">
                                                         @if(session()->get('language') == 'vietnamese')
                                                             {{ $subSubCategory->subsubcategory_name_vn }}
                                                         @else

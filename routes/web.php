@@ -147,3 +147,6 @@ Route::get('subsubcategory/product/{subSubCate_id}/{slug}', [IndexController::cl
 
 // Product View Modal with AJAX
 Route::get('/product/view/modal/{id}', [IndexController::class, 'ProductViewAjax']);
+
+// addToCart store data
+Route::post('/cart/data/store/{id}', [CartController::class, 'AddToCart']);

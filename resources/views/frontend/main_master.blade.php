@@ -91,7 +91,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"><strong><span id="pname"></span></strong></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+{{--                Button To CLOSE ADD TO CART model--}}
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModel">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -235,6 +236,7 @@
     function addToCart() {
         const product_name = $('#pname').text();
         const id = $('#product_id').val();
+        // fields selected by user
         const color = $('#color option:selected').text();
         const size = $('#size option:selected').text();
         const quantity = $('#qty').val();
@@ -242,13 +244,14 @@
             type: "POST",
             dataType: "json",
             data: {
+                product_name: product_name,
                 color: color,
                 size: size,
                 quantity: quantity,
-                product_name: product_name
             },
             url: "/cart/data/store/" + id,
             success: function (data) {
+                $('#closeModel').click(); // make sure close modal after click add to cart
                 console.log(data);
             }
         });

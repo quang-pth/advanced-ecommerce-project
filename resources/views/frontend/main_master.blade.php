@@ -63,6 +63,9 @@
 <script src="{{ asset('frontend/assets/js/bootstrap-select.min.js') }}"></script>
 <script src="{{ asset('frontend/assets/js/wow.min.js') }}"></script>
 <script src="{{ asset('frontend/assets/js/scripts.js') }}"></script>
+{{-- sweet alert for add to cart portion --}}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 {{--Toastr CDN LINK --}}
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
@@ -252,7 +255,27 @@
             url: "/cart/data/store/" + id,
             success: function (data) {
                 $('#closeModel').click(); // make sure close modal after click add to cart
-                console.log(data);
+            //    start message alert add to cart
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+
+                if ($.isEmptyObject(data.error)) {
+                    Toast.fire({
+                        type: 'success',
+                        title: data.success
+                    });
+                } else {
+                    Toast.fire({
+                        type: 'error',
+                        title: data.error
+                    })
+                }
+            //    end message
             }
         });
 

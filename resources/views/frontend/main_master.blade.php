@@ -143,7 +143,7 @@
 {{--                    end form-group --}}
                         <div class="form-group">
                             <label for="qty">Quantity</label>
-                            <input type="number" class="form-control" name="quantity" id="qty" value=1 min=1>
+                            <input type="number" class="form-control" name="quantity" id="qty" value="1" min="1">
                         </div>
 {{--                    end form-group --}}
                         <input type="hidden" id="product_id">
@@ -254,6 +254,7 @@
             },
             url: "/cart/data/store/" + id,
             success: function (data) {
+                miniCart();
                 $('#closeModel').click(); // make sure close modal after click add to cart
             //    start message alert add to cart
                 const Toast = Swal.mixin({
@@ -278,12 +279,44 @@
             //    end message
             }
         });
-
     }
-
-
 //    END Add To Cart
+</script>
 
+<script type="text/javascript">
+    function miniCart() {
+        $.ajax({
+            type: 'GET',
+            url: '/product/mini/cart',
+            dataType: 'json',
+            success: function (response) {
+                $('span[id="cartSubTotal"]').text('$' + response.cartTotal);
+                $('span[id="cartQty"]').text(response.cartQty);
+                let miniCart = "";
+                $.each(response.carts, function (key, value) {
+                    miniCart += `
+                        <div class="cart-item product-summary">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <div class="image"> <a href="detail.html"><img src="/${value.options.image}" alt=""></a> </div>
+                                </div>
+                                <div class="col-xs-7">
+                                    <h3 class="name"><a href="index.php?page-detail">${value.name}</a></h3>
+                                    <div class="price">${value.price} * ${value.qty}</div>
+                                </div>
+                                <div class="col-xs-1 action"> <a href="#"><i class="fa fa-trash"></i></a> </div>
+                            </div>
+                        </div>
+                        <!-- /.cart-item -->
+                        <div class="clearfix"></div>
+                        <hr>`
+                });
+
+                $('#miniCart').html(miniCart);
+            }
+        });
+    }
+    miniCart();
 </script>
 
 </body>

@@ -42,5 +42,18 @@ class CartController extends Controller
         return response()->json([
             'success' => 'Successfully Added on Your cart',
         ]);
-    } // emd AddToCart method
+    } // end AddToCart method
+
+    public function GetMiniCart() {
+        $carts = Cart::content();
+        $cartQty = Cart::count(); // total numbers of items in cart
+        $cartTotal = Cart::total(); // total of all items (price && quantity)
+
+        return response()->json(array(
+            'carts' => $carts,
+            'cartQty' => $cartQty,
+            'cartTotal' => $cartTotal,
+        ));
+    } // end GetMiniCart
+
 }

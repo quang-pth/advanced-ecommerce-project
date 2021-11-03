@@ -248,7 +248,7 @@
                                                         <div class="arrow plus gradient"><span class="ir"><i class="icon fa fa-sort-asc"></i></span></div>
                                                         <div class="arrow minus gradient"><span class="ir"><i class="icon fa fa-sort-desc"></i></span></div>
                                                     </div>
-                                                    <input type="number" name="quantity" value=1 min=1 id="qty">
+                                                    <input type="number" name="quantity" value="1" min="1" id="qty">
                                                 </div>
                                             </div>
                                         </div>

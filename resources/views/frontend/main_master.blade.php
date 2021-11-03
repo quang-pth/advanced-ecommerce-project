@@ -122,27 +122,28 @@
 {{--                    end col-md-4 --}}
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="exampleFormControlSelect1">Choose Color</label>
-                            <select class="form-control" id="exampleFormControlSelect1" name="color">
+                            <label for="color">Choose Color</label>
+                            <select class="form-control" id="color" name="color">
 
 
                             </select>
                         </div>
 {{--                    end form-group --}}
                         <div class="form-group" id="sizeArea">
-                            <label for="exampleFormControlSelect1">Choose Size</label>
-                            <select class="form-control" id="exampleFormControlSelect1" name="size">
+                            <label for="size">Choose Size</label>
+                            <select class="form-control" id="size" name="size">
 
 
                             </select>
                         </div>
 {{--                    end form-group --}}
                         <div class="form-group">
-                            <label for="exampleFormControlInput1">Quantity</label>
-                            <input type="number" class="form-control" id="exampleFormControlInput1" value="1" min="1">
+                            <label for="qty">Quantity</label>
+                            <input type="number" class="form-control" id="qty" value="1" min="1">
                         </div>
 {{--                    end form-group --}}
-                        <button type="submit" class="btn btn-primary">Add To Cart</button>
+                        <input type="hidden" id="product_id">
+                        <button type="submit" class="btn btn-primary" onclick="addToCart()">Add To Cart</button>
                     </div>
 {{--                    end col-md-4 --}}
                 </div>
@@ -174,6 +175,9 @@
                 $('#pcategory').text(data.product.category.category_name_en);
                 $('#pbrand').text(data.product.brand.brand_name_en);
                 $('#pimage').attr('src', '/' + data.product.product_thumbnail);
+
+                $('#product_id').val(productId); // id to add to cart
+                $('#qty').val(1); // default qty
 
                 // Product Price
                 if (data.product.discount_price == null) {
@@ -224,6 +228,35 @@
         })
 
     }
+//    end product view with modal
+
+
+//    START Add To Cart Product
+    function addToCart() {
+        const product_name = $('#pname').text();
+        const id = $('#product_id').val();
+        const color = $('#color option:selected').text();
+        const size = $('#size option:selected').text();
+        const quantity = $('#qty').val();
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            data: {
+                color: color,
+                size: size,
+                quantity: quantity,
+                product_name: product_name
+            },
+            url: "/cart/data/store/" + id,
+            success: function (data) {
+                console.log(data);
+            }
+        });
+
+    }
+
+
+//    END Add To Cart
 
 </script>
 

@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\LanguageController;
 use App\Http\Controllers\Frontend\ProductDetailsController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -144,3 +145,12 @@ Route::get('subcategory/product/{subcate_id}/{slug}', [IndexController::class, '
 // Frontend SubSubcategory wise Data
 Route::get('subsubcategory/product/{subSubCate_id}/{slug}', [IndexController::class, 'SubSubCategoryWiseProduct']);
 
+// Product View Modal with AJAX
+Route::get('/product/view/modal/{id}', [IndexController::class, 'ProductViewAjax']);
+
+// addToCart store data
+Route::post('/cart/data/store/{id}', [CartController::class, 'AddToCart']);
+// get mini cart
+Route::get('/product/mini/cart', [CartController::class, 'GetMiniCart']);
+// remove mini cart
+Route::get('/minicart/product-remove/{rowId}', [CartController::class, 'RemoveMiniCart']);

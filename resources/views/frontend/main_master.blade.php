@@ -294,7 +294,7 @@
                 $('span[id="cartQty"]').text(response.cartQty);
                 let miniCart = "";
                 $.each(response.carts, function (key, value) {
-                    miniCart += `
+                    miniCart += (`
                         <div class="cart-item product-summary">
                             <div class="row">
                                 <div class="col-xs-4">
@@ -304,19 +304,52 @@
                                     <h3 class="name"><a href="index.php?page-detail">${value.name}</a></h3>
                                     <div class="price">${value.price} * ${value.qty}</div>
                                 </div>
-                                <div class="col-xs-1 action"> <a href="#"><i class="fa fa-trash"></i></a> </div>
+                                <div class="col-xs-1 action"> <button type="submit" id="${value.rowId}" onclick="miniCartRemove(this.id)" class="fa fa-trash"></i></button> </div>
                             </div>
                         </div>
-                        <!-- /.cart-item -->
                         <div class="clearfix"></div>
-                        <hr>`
+                        <hr>`)
                 });
 
                 $('#miniCart').html(miniCart);
             }
         });
     }
+
     miniCart();
+
+   // mini cart REMOVE
+    function miniCartRemove(rowId) {
+        $.ajax({
+            type: 'GET',
+            url: '/minicart/product-remove/' + rowId,
+            dataType: 'json',
+            success: function (response) {
+                miniCart();
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+
+                if ($.isEmptyObject(response.error)) {
+                    Toast.fire({
+                        type: 'success',
+                        title: response.success
+                    });
+                } else {
+                    Toast.fire({
+                        type: 'error',
+                        title: response.error
+                    })
+                }
+            }
+        });
+    }
+//    end mini cart REMOVE
+
 </script>
 
 </body>

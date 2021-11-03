@@ -143,7 +143,7 @@
 {{--                    end form-group --}}
                         <div class="form-group">
                             <label for="qty">Quantity</label>
-                            <input type="number" class="form-control" id="qty" value="1" min="1">
+                            <input type="number" class="form-control" name="quantity" id="qty" value=1 min=1>
                         </div>
 {{--                    end form-group --}}
                         <input type="hidden" id="product_id">

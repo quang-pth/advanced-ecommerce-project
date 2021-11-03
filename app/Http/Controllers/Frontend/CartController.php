@@ -12,10 +12,10 @@ class CartController extends Controller
     public function AddToCart(Request $request, $id) {
         $product = Product::findOrFail($id);
         if ($product->discount_price == NULL) {
-            Cart::add([
+            $cart = Cart::add([
                 'id' => $id,
                 'name' => $request->product_name,
-                'qty' => $request->quantity,
+                'qty' => intval($request->quantity),
                 'price' => $product->selling_price,
                 'weight' => 1,
                 'options' => [
@@ -25,10 +25,10 @@ class CartController extends Controller
                 ]
             ]);
         } else {
-            Cart::add([
+            $cart = Cart::add([
                 'id' => $id,
                 'name' => $request->product_name,
-                'qty' => $request->quantity,
+                'qty' => intval($request->quantity),
                 'price' => $product->discount_price,
                 'weight' => 1,
                 'options' => [
@@ -40,7 +40,7 @@ class CartController extends Controller
         }
 
         return response()->json([
-            'success' => 'Successfully Added on Your cart'
+            'success' => 'Successfully Added on Your cart',
         ]);
     } // emd AddToCart method
 }

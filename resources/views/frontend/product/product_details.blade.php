@@ -117,7 +117,7 @@
                         </div><!-- /.gallery-holder -->
                         <div class='col-sm-6 col-md-7 product-info-block'>
                             <div class="product-info">
-                                <h1 class="name">
+                                <h1 class="name" id="pname">
                                     @if(session()->get('language') == 'vietnamese')
                                         {{ $product->product_name_vn }}
                                     @else
@@ -197,7 +197,7 @@
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label class="info-title control-label">Choose Color</label>
-                                            <select class="form-control unicase-form-control selectpicker">
+                                            <select class="form-control unicase-form-control selectpicker" id="color">
                                                 <option selected="" disabled>--Color--</option>
                                                 @php
                                                     $product_color = session()->get('language') == 'vietnamese' ? $product_color_vn : $product_color_en;
@@ -212,17 +212,20 @@
 {{--                                    END col 6--}}
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label class="info-title control-label">Choose Size</label>
-                                            <select class="form-control unicase-form-control selectpicker">
-                                                <option selected="" disabled>--Size--</option>
-                                                @php
-                                                    $product_size = session()->get('language') == 'vietnamese' ? $product_size_vn : $product_size_en;
-                                                @endphp
-                                                @foreach($product_size as $size)
-                                                    <option value="{{ $size }}">{{ ucwords($size) }}</option>
-                                                @endforeach
-                                            </select>
-                                            </select>
+                                            @if($product->product_size_en == null)
+{{--                                                not display size --}}
+                                            @else
+                                                <label class="info-title control-label">Choose Size</label>
+                                                <select class="form-control unicase-form-control selectpicker" id="size">
+                                                    <option selected="" disabled>--Size--</option>
+                                                    @php
+                                                        $product_size = session()->get('language') == 'vietnamese' ? $product_size_vn : $product_size_en;
+                                                    @endphp
+                                                    @foreach($product_size as $size)
+                                                        <option value="{{ $size }}">{{ ucwords($size) }}</option>
+                                                    @endforeach
+                                                </select>
+                                            @endif
                                         </div>
                                         {{--                                        END form group --}}
                                     </div>
@@ -245,13 +248,14 @@
                                                         <div class="arrow plus gradient"><span class="ir"><i class="icon fa fa-sort-asc"></i></span></div>
                                                         <div class="arrow minus gradient"><span class="ir"><i class="icon fa fa-sort-desc"></i></span></div>
                                                     </div>
-                                                    <input type="text" value="1">
+                                                    <input type="number" name="quantity" value=1 min=1 id="qty">
                                                 </div>
                                             </div>
                                         </div>
 
+                                        <input type="hidden" id="product_id" value="{{ $product->id }}" min="1">
                                         <div class="col-sm-7">
-                                            <a href="#" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</a>
+                                            <button type="submit" onclick="addToCart()" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</button>
                                         </div>
 
                                     </div><!-- /.row -->

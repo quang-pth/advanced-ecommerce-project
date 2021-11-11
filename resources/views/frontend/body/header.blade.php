@@ -12,7 +12,7 @@
                                     My Account
                                 @endif
                             </a></li>
-                        <li><a href="#"><i class="icon fa fa-heart"></i>
+                        <li><a href="{{route('wishlist')}}"><i class="icon fa fa-heart"></i>
                                 @if(session()->get('language') == 'vietnamese')
                                     Danh sách mong muốn
                                 @else
@@ -34,7 +34,7 @@
                             </a></li>
                         <li>
                             @auth
-                                  <a href="{{ route('login') }}"><i class="icon fa fa-user"></i>
+                                  <a href="/dashboard"><i class="icon fa fa-user"></i>
                                       @if(session()->get('language') == 'vietnamese')
                                           Thông tin người dùng
                                       @else

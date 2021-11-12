@@ -418,11 +418,11 @@ ${value.product.discount_price} <span>$ ${value.product.selling_price}</span>`}
                                 </td>
                                 <td class="col-md-1 close-btn">
 
- <button class="btn btn-primary icon" type="button" title="Add Cart" data-toggle="modal" data-target="#exampleModal" id="${value.product_id}}" onclick="productView(this.id)">
+ <button class="btn btn-primary icon" type="button" title="Add Cart" data-toggle="modal" data-target="#exampleModal" id="${value.product_id}" onclick="productView(this.id)">
                                                        <i class="fa fa-shopping-cart"></i> Add To Cart</button>
                                 </td>
                                 <td class="col-md-1 close-btn">
- <button type="submit" title="Remove" id="${value.product_id}}" onclick="wishlistRemove(this.id)">
+ <button type="submit" title="Remove" id="${value.id}" onclick="wishlistRemove(this.id)">
                                                        <i class="fa fa-times"></i></button>
                                 </td>
 
@@ -438,17 +438,16 @@ ${value.product.discount_price} <span>$ ${value.product.selling_price}</span>`}
 
     wishlist();
 
-    function wishlistRemove(rowId) {
+    function wishlistRemove(id) {
         $.ajax({
             type: 'GET',
-            url: '/minicart/product-remove/' + rowId,
+            url: '/wishlist-remove/' + id,
             dataType: 'json',
             success: function (response) {
-                miniCart();
+                wishlist();
                 const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
-                    icon: 'success',
                     showConfirmButton: false,
                     timer: 3000
                 });
@@ -456,17 +455,19 @@ ${value.product.discount_price} <span>$ ${value.product.selling_price}</span>`}
                 if ($.isEmptyObject(response.error)) {
                     Toast.fire({
                         type: 'success',
+                        icon: 'success',
                         title: response.success
                     });
                 } else {
                     Toast.fire({
                         type: 'error',
+                        icon: 'error',
                         title: response.error
                     })
                 }
             }
         });
-    }
+    } // end remove wishlist
 </script>
 {{--END LOAD Wishlist DATA--}}
 

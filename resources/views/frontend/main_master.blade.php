@@ -31,7 +31,8 @@
 
     <!-- Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,600italic,700,700italic,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,600italic,700,700italic,800'
+          rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 </head>
 <body class="cnt-home">
@@ -71,7 +72,7 @@
 <script>
     @if (Session::has('message'))
     const type = "{{ Session::get('alert-type', 'info') }}";
-    switch(type) {
+    switch (type) {
         case 'info':
             toastr.info("{{ Session::get('message') }}");
             break;
@@ -94,20 +95,21 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"><strong><span id="pname"></span></strong></h5>
-{{--                Button To CLOSE ADD TO CART model--}}
+                {{--                Button To CLOSE ADD TO CART model--}}
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModel">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-{{--            modal body--}}
+            {{--            modal body--}}
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="card" style="width: 18rem;">
-                            <img src="..." class="card-img-top" alt="..." style="height: 200px; width: 200px" id="pimage">
+                            <img src="..." class="card-img-top" alt="..." style="height: 200px; width: 200px"
+                                 id="pimage">
                         </div>
                     </div>
-{{--                    end col-md-4 --}}
+                    {{--                    end col-md-4 --}}
                     <div class="col-md-4">
                         <ul class="list-group">
                             <li class="list-group-item">Product Price:
@@ -118,12 +120,14 @@
                             <li class="list-group-item">Category: <strong id="pcategory"></strong></li>
                             <li class="list-group-item">Brand: <strong id="pbrand"></strong></li>
                             <li class="list-group-item">Stock:
-                                <span class="badge badge-pill badge-success" id="available" style="background: green; color: white;"></span>
-                                <span class="badge badge-pill badge-danger" id="stockout" style="background: red; color: white;"></span>
+                                <span class="badge badge-pill badge-success" id="available"
+                                      style="background: green; color: white;"></span>
+                                <span class="badge badge-pill badge-danger" id="stockout"
+                                      style="background: red; color: white;"></span>
                             </li>
                         </ul>
                     </div>
-{{--                    end col-md-4 --}}
+                    {{--                    end col-md-4 --}}
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="color">Choose Color</label>
@@ -132,7 +136,7 @@
 
                             </select>
                         </div>
-{{--                    end form-group --}}
+                        {{--                    end form-group --}}
                         <div class="form-group" id="sizeArea">
                             <label for="size">Choose Size</label>
                             <select class="form-control" id="size" name="size">
@@ -140,20 +144,20 @@
 
                             </select>
                         </div>
-{{--                    end form-group --}}
+                        {{--                    end form-group --}}
                         <div class="form-group">
                             <label for="qty">Quantity</label>
                             <input type="number" class="form-control" name="quantity" id="qty" value="1" min="1">
                         </div>
-{{--                    end form-group --}}
+                        {{--                    end form-group --}}
                         <input type="hidden" id="product_id">
                         <button type="submit" class="btn btn-primary" onclick="addToCart()">Add To Cart</button>
                     </div>
-{{--                    end col-md-4 --}}
+                    {{--                    end col-md-4 --}}
                 </div>
-{{--                end row --}}
+                {{--                end row --}}
             </div>
-{{--            end modal body --}}
+            {{--            end modal body --}}
         </div>
     </div>
 </div>
@@ -165,13 +169,14 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     })
-//    start product view with Modal
+
+    //    start product view with Modal
     function productView(productId) {
         $.ajax({
             type: 'GET',
             url: '/product/view/modal/' + productId,
             dataType: 'json',
-            success: function(data) {
+            success: function (data) {
                 console.log(data);
                 $('#pname').text(data.product.product_name_en);
                 $('#price').text(data.product.selling_price);
@@ -207,9 +212,9 @@
                 // display product COLOR options
                 $('select[name="color"]').empty();
                 $.each(data.colorEn, function (key, value) {
-                    $('select[name="color"]').append('<option value="'+value+'">'+value+'</option>');
+                    $('select[name="color"]').append('<option value="' + value + '">' + value + '</option>');
                     // hide COLOR area if not exist
-                    if(data.colorEn == "") {
+                    if (data.colorEn == "") {
                         $('#sizeArea').hide();
                     } else {
                         $('#sizeArea').show();
@@ -219,9 +224,9 @@
                 // display product SIZE options
                 $('select[name="size"]').empty();
                 $.each(data.sizeEn, function (key, value) {
-                    $('select[name="size"]').append('<option value="'+value+'">'+value+'</option>');
+                    $('select[name="size"]').append('<option value="' + value + '">' + value + '</option>');
                     // hide SIZE area if not exist
-                    if(data.sizeEn == "") {
+                    if (data.sizeEn == "") {
                         $('#sizeArea').hide();
                     } else {
                         $('#sizeArea').show();
@@ -232,10 +237,11 @@
         })
 
     }
-//    end product view with modal
+
+    //    end product view with modal
 
 
-//    START Add To Cart Product
+    //    START Add To Cart Product
     function addToCart() {
         const product_name = $('#pname').text();
         const id = $('#product_id').val();
@@ -256,7 +262,7 @@
             success: function (data) {
                 miniCart();
                 $('#closeModel').click(); // make sure close modal after click add to cart
-            //    start message alert add to cart
+                //    start message alert add to cart
                 const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -276,11 +282,12 @@
                         title: data.error
                     })
                 }
-            //    end message
+                //    end message
             }
         });
     }
-//    END Add To Cart
+
+    //    END Add To Cart
 </script>
 
 <script type="text/javascript">
@@ -318,7 +325,7 @@
 
     miniCart();
 
-   // mini cart REMOVE
+    // mini cart REMOVE
     function miniCartRemove(rowId) {
         $.ajax({
             type: 'GET',
@@ -348,48 +355,121 @@
             }
         });
     }
-//    end mini cart REMOVE
+
+    //    end mini cart REMOVE
 
 </script>
 
 {{--START Add Wishlist Page--}}
 <script type="text/javascript">
-function addToWishlist(product_id) {
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        url: '/add-to-wishlist/'+product_id,
-        success: function (data) {
+    function addToWishlist(product_id) {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/add-to-wishlist/' + product_id,
+            success: function (data) {
 
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000
-            });
-
-            if ($.isEmptyObject(data.error)) {
-                Toast.fire({
-                    type: 'success',
-                    icon: 'success',
-                    title: data.success
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
                 });
-            } else {
-                Toast.fire({
-                    type: 'error',
-                    icon: 'error',
-                    title: data.error
-                })
+
+                if ($.isEmptyObject(data.error)) {
+                    Toast.fire({
+                        type: 'success',
+                        icon: 'success',
+                        title: data.success
+                    });
+                } else {
+                    Toast.fire({
+                        type: 'error',
+                        icon: 'error',
+                        title: data.error
+                    })
+                }
             }
-        }
 
-    })
-}
-
+        })
+    }
 </script>
-
-
 {{--END Add Wishlist Page--}}
+
+{{--START LOAD Wishlist data--}}
+<script type="text/javascript">
+    function wishlist() {
+        $.ajax({
+            type: 'GET',
+            url: '/get-wishlist-product',
+            dataType: 'json',
+            success: function (response) {
+                let rows = "";
+                $.each(response, function (key, value) {
+                    rows += (`
+                        <tr>
+                                <td class="col-md-2"><img src="/${value.product.product_thumbnail}" alt="imga"></td>
+                                <td class="col-md-7">
+                                    <div class="product-name"><a href="#">${value.product.product_name_en}</a></div>
+                                    <div class="price">$
+                                        ${value.product.discount_price == null ? `${value.product.selling_price}` : `
+${value.product.discount_price} <span>$ ${value.product.selling_price}</span>`}
+                                    </div>
+                                </td>
+                                <td class="col-md-1 close-btn">
+
+ <button class="btn btn-primary icon" type="button" title="Add Cart" data-toggle="modal" data-target="#exampleModal" id="${value.product_id}}" onclick="productView(this.id)">
+                                                       <i class="fa fa-shopping-cart"></i> Add To Cart</button>
+                                </td>
+                                <td class="col-md-1 close-btn">
+ <button type="submit" title="Remove" id="${value.product_id}}" onclick="wishlistRemove(this.id)">
+                                                       <i class="fa fa-times"></i></button>
+                                </td>
+
+
+</td>
+                            </tr>`)
+                });
+
+                $('#wishlist').html(rows);
+            }
+        });
+    }
+
+    wishlist();
+
+    function wishlistRemove(rowId) {
+        $.ajax({
+            type: 'GET',
+            url: '/minicart/product-remove/' + rowId,
+            dataType: 'json',
+            success: function (response) {
+                miniCart();
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+
+                if ($.isEmptyObject(response.error)) {
+                    Toast.fire({
+                        type: 'success',
+                        title: response.success
+                    });
+                } else {
+                    Toast.fire({
+                        type: 'error',
+                        title: response.error
+                    })
+                }
+            }
+        });
+    }
+</script>
+{{--END LOAD Wishlist DATA--}}
+
 
 </body>
 </html>

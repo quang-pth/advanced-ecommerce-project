@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Exception;
 
 class CartPageController extends Controller
 {
@@ -22,4 +23,14 @@ class CartPageController extends Controller
             'cartTotal' => $cartTotal,
         ));
     } // end GetCardProduct
+
+    public function RemoveCartProduct($rowId) {
+        try {
+            Cart::remove($rowId);
+            return response()->json(['success' => 'Successully Remove From Cart']);
+        } catch(Exception $exception) {
+            return response()->json(['error' => 'Not Valid Cart ID']);
+        }
+    } // end RemoveCartProduct
+
 }

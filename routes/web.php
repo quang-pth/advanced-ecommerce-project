@@ -165,6 +165,8 @@ Route::group(['prefix' => 'user', 'middleware' => ['user', 'auth'], 'namespace' 
     Route::get('/get-wishlist-product', [WishlistController::class, 'GetWishListProduct']);
     Route::get('/wishlist-remove/{id}', [WishlistController::class, 'RemoveWishListProduct']);
     Route::get('/wishlist', [WishlistController::class, 'ViewWishlist'])->name('wishlist');
+//    my cart manage route
     Route::get('/mycart', [CartPageController::class, 'MyCart'])->name('mycart');
     Route::get('/get-cart-product', [CartPageController::class, 'GetCartProduct']);
+    Route::get('/cart-remove/{rowId}', [CartPageController::class, 'RemoveCartProduct']);
 });

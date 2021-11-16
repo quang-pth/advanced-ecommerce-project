@@ -333,6 +333,7 @@
             dataType: 'json',
             success: function (response) {
                 miniCart();
+                cart();
                 const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -498,7 +499,7 @@ ${value.product.discount_price} <span>$ ${value.product.selling_price}</span>`}
                                 </td>
                                 <td class="col-md-2"><strong>$${value.subtotal}</strong> </td>
 
-                                <td class="col-md-1 close-btn"><button type="submit" title="Remove" id="${value.id}" onclick="wishlistRemove(this.id)">
+                                <td class="col-md-1 close-btn"><button type="submit" title="Remove" id="${value.rowId}" onclick="cartRemove(this.id)">
                                                        <i class="fa fa-times"></i></button>
                                 </td>
 
@@ -514,13 +515,14 @@ ${value.product.discount_price} <span>$ ${value.product.selling_price}</span>`}
 
     cart();
 
-    function wishlistRemove(id) {
+    function cartRemove(rowId) {
         $.ajax({
             type: 'GET',
-            url: '/user/wishlist-remove/' + id,
+            url: '/user/cart-remove/' + rowId,
             dataType: 'json',
             success: function (response) {
                 cart();
+                miniCart();
                 const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',

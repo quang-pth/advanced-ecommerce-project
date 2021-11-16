@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Exception;
 
 class CartController extends Controller
 {
@@ -60,10 +61,12 @@ class CartController extends Controller
     } // end GetMiniCart
 
     public function RemoveMiniCart($rowId) {
-        Cart::remove($rowId);
-        return response()->json([
-            'success' => 'Product Removed From Cart'
-        ]);
+        try {
+            Cart::remove($rowId);
+            return response()->json(['success' => 'Successully Remove From Cart']);
+        } catch(Exception $exception) {
+            return response()->json(['error' => 'Not Valid Cart ID']);
+        }
     } // end RemoveMiniCart
 
     public function AddToWishlist(Request $request, $product_id) {

@@ -309,7 +309,7 @@
                                 </div>
                                 <div class="col-xs-7">
                                     <h3 class="name"><a href="index.php?page-detail">${value.name}</a></h3>
-                                    <div class="price">${value.price} * ${value.qty}</div>
+                                    <div class="price">$${value.price} * ${value.qty}</div>
                                 </div>
                                 <div class="col-xs-1 action"> <button type="submit" id="${value.rowId}" onclick="miniCartRemove(this.id)" class="fa fa-trash"></i></button> </div>
                             </div>
@@ -401,7 +401,7 @@
     function wishlist() {
         $.ajax({
             type: 'GET',
-            url: '/get-wishlist-product',
+            url: '/user/get-wishlist-product',
             dataType: 'json',
             success: function (response) {
                 let rows = "";
@@ -441,7 +441,7 @@ ${value.product.discount_price} <span>$ ${value.product.selling_price}</span>`}
     function wishlistRemove(id) {
         $.ajax({
             type: 'GET',
-            url: '/wishlist-remove/' + id,
+            url: '/user/wishlist-remove/' + id,
             dataType: 'json',
             success: function (response) {
                 wishlist();
@@ -471,6 +471,82 @@ ${value.product.discount_price} <span>$ ${value.product.selling_price}</span>`}
 </script>
 {{--END LOAD Wishlist DATA--}}
 
+
+{{--LOAD MY CART data--}}
+<script type="text/javascript">
+    function cart() {
+        $.ajax({
+            type: 'GET',
+            url: '/user/get-cart-product',
+            dataType: 'json',
+            success: function (response) {
+                let rows = "";
+                $.each(response.carts, function (key, value) {
+                    rows += (`
+                        <tr>
+                                <td class="col-md-2"><img src="/${value.options.image}" alt="imga" style="width: 60px; height: 60px;"></td>
+                                <td class="col-md-7">
+                                    <div class="product-name"><a href="#">${value.name}</a></div>
+                                    <div class="price">$${value.price}</div>
+                                </td>
+                                <td class="col-md-2"><strong>${value.options.color}</strong> </td>
+                                <td class="col-md-2">${value.options.size != null ? `<strong>${value.options.size}</strong>` : `<span>...<span>`} </td>
+                                <td class="col-md-2">
+                                    <button type="submit" class="btn btn-success btn-sm"">+</button>
+                                    <input type="text" value="${value.qty}" min="1" max="100" disabled="" style="width: 25px;">
+                                    <button type="submit" class="btn btn-danger btn-sm">-</button>
+                                </td>
+                                <td class="col-md-2"><strong>$${value.subtotal}</strong> </td>
+
+                                <td class="col-md-1 close-btn"><button type="submit" title="Remove" id="${value.id}" onclick="wishlistRemove(this.id)">
+                                                       <i class="fa fa-times"></i></button>
+                                </td>
+
+
+</td>
+                            </tr>`)
+                });
+
+                $('#cartPage').html(rows);
+            }
+        });
+    }
+
+    cart();
+
+    function wishlistRemove(id) {
+        $.ajax({
+            type: 'GET',
+            url: '/user/wishlist-remove/' + id,
+            dataType: 'json',
+            success: function (response) {
+                cart();
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+
+                if ($.isEmptyObject(response.error)) {
+                    Toast.fire({
+                        type: 'success',
+                        icon: 'success',
+                        title: response.success
+                    });
+                } else {
+                    Toast.fire({
+                        type: 'error',
+                        icon: 'error',
+                        title: response.error
+                    })
+                }
+            }
+        });
+    } // end remove wishlist
+</script>
+
+{{--END LOAD MYCART--}}
 
 </body>
 </html>

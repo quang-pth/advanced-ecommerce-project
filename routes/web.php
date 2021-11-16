@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\LanguageController;
 use App\Http\Controllers\Frontend\ProductDetailsController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\User\WishlistController;
+use App\Http\Controllers\User\CartPageController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -164,4 +165,6 @@ Route::group(['prefix' => 'user', 'middleware' => ['user', 'auth'], 'namespace' 
     Route::get('/get-wishlist-product', [WishlistController::class, 'GetWishListProduct']);
     Route::get('/wishlist-remove/{id}', [WishlistController::class, 'RemoveWishListProduct']);
     Route::get('/wishlist', [WishlistController::class, 'ViewWishlist'])->name('wishlist');
+    Route::get('/mycart', [CartPageController::class, 'MyCart'])->name('mycart');
+    Route::get('/get-cart-product', [CartPageController::class, 'GetCartProduct']);
 });

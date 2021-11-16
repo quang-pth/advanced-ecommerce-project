@@ -12,8 +12,19 @@
 <div class="container">
     <div class="breadcrumb-inner">
         <ul class="list-inline list-unstyled">
-            <li><a href="home.html">Home</a></li>
-            <li class='active'>Wishlist</li>
+            <li><a href="home.html">
+                    @if(session()->get('language') == 'vietnamese')
+                        Trang chủ
+                    @else
+                        Home Page
+                    @endif
+                </a></li>
+            <li class='active'>
+                @if(session()->get('language') == 'vietnamese')
+                    Danh sách mong muốn
+                @else
+                    Wishlist Page
+                @endif</li>
         </ul>
     </div><!-- /.breadcrumb-inner -->
 </div><!-- /.container -->
@@ -28,7 +39,13 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th colspan="4" class="heading-title">My Wishlist</th>
+                                <th colspan="4" class="heading-title">
+                                    @if(session()->get('language') == 'vietnamese')
+                                        Danh sách mong muốn
+                                    @else
+                                        Wishlist Page
+                                    @endif
+                                </th>
                             </tr>
                             </thead>
                             <tbody id="wishlist">

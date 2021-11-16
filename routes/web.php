@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\LanguageController;
 use App\Http\Controllers\Frontend\ProductDetailsController;
@@ -175,4 +176,8 @@ Route::get('/user/cart-remove/{rowId}', [CartPageController::class, 'RemoveCartP
 Route::get('/cart-increment/{rowId}', [CartPageController::class, 'CartIncrement']);
 Route::get('/cart-decrement/{rowId}', [CartPageController::class, 'CartDecrement']);
 
+// Admin Slider All Route
+Route::prefix('coupons')->group(function() {
+    Route::get('/view', [CouponController::class, 'CouponView'])->name('manage-coupon');
 
+});

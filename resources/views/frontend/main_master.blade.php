@@ -491,12 +491,18 @@ ${value.product.discount_price} <span>$ ${value.product.selling_price}</span>`}
                                     <div class="price">$${value.price}</div>
                                 </td>
                                 <td class="col-md-2"><strong>${value.options.color}</strong> </td>
-                                <td class="col-md-2">${value.options.size != null ? `<strong>${value.options.size}</strong>` : `<span>...<span>`} </td>
-                                <td class="col-md-2">
-                                    <button type="submit" class="btn btn-success btn-sm"">+</button>
-                                    <input type="text" value="${value.qty}" min="1" max="100" disabled="" style="width: 25px;">
-                                    <button type="submit" class="btn btn-danger btn-sm">-</button>
-                                </td>
+                                <td class="col-md-2">${value.options.size != null ? `<strong>${value.options.size}</strong>` : ''} </td>
+                               <td class="cart-product-quantity">
+                                    <div class="quant-input">
+                                        <div class="arrows">
+                                          <div class="arrow plus gradient" id="${value.rowId}" onclick="cartIncrement(this.id)"><span class="ir"><i class="icon fa fa-sort-asc"></i></span></div>
+                                          ${value.qty > 1 ?
+                                             `<div class="arrow minus gradient" id="${value.rowId}" onclick="cartDecrement(this.id)"><span class="ir"><i class="icon fa fa-sort-desc"></i></span></div>` : ''}
+
+                                        </div>
+                                        <input type="text" value="${value.qty}" min="1" max="100">
+                                    </div>
+		                        </td>
                                 <td class="col-md-2"><strong>$${value.subtotal}</strong> </td>
 
                                 <td class="col-md-1 close-btn"><button type="submit" title="Remove" id="${value.rowId}" onclick="cartRemove(this.id)">
@@ -545,9 +551,36 @@ ${value.product.discount_price} <span>$ ${value.product.selling_price}</span>`}
                 }
             }
         });
-    } // end remove wishlist
-</script>
+    } // end remove my cart
 
+//    CART INCREMENT
+    function cartIncrement(rowId) {
+        $.ajax({
+            type: 'GET',
+            url: "/cart-increment/" + rowId,
+            dataType: "json",
+            success: function(data) {
+                // update cart related components after increment succesfully
+                cart();
+                miniCart();
+            }
+        })
+    }
+
+//    CART INCREMENT
+    function cartDecrement(rowId) {
+        $.ajax({
+            type: 'GET',
+            url: "/cart-decrement/" + rowId,
+            dataType: "json",
+            success: function(data) {
+                cart();
+                miniCart();
+            }
+        })
+    }
+
+</script>
 {{--END LOAD MYCART--}}
 
 </body>

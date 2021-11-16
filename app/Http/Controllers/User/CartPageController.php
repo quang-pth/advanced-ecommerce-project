@@ -33,4 +33,24 @@ class CartPageController extends Controller
         }
     } // end RemoveCartProduct
 
+    public function CartIncrement($rowId) {
+        try {
+            $cartToUpdate = Cart::get($rowId);
+            Cart::update($rowId, $cartToUpdate->qty + 1);
+            return response()->json(['increment']);
+        } catch(Exception $exception) {
+            return response()->json(['error' => 'Quantity Not Increasing Failed']);
+        }
+    } // end Cart Increment
+
+    public function CartDecrement($rowId) {
+        try {
+            $cartToUpdate = Cart::get($rowId);
+            Cart::update($rowId, $cartToUpdate->qty - 1);
+            return response()->json(['increment']);
+        } catch(Exception $exception) {
+            return response()->json(['error' => 'Quantity Not Increasing Failed']);
+        }
+    } // end Cart Decrement
+
 }

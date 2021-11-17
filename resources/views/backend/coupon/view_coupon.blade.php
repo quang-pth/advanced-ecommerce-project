@@ -28,17 +28,18 @@
                                         <tr>
                                             <td>{{ $item->coupon_name }}</td>
                                             <td>{{ $item->coupon_discount }}%</td>
-                                            <td>{{ $item->coupon_validity }}</td>
                                             <td>
-                                                @if($item->status == 1)
-                                                <span class="badge badge-pill badge-success">Active</span>
+                                                {{\Carbon\Carbon::parse($item->coupon_validity)->format('D, d F Y')}}
+                                            <td>
+                                                @if($item->coupon_validity >= \Carbon\Carbon::now()->format('Y-m-d'))
+                                                    <span class="badge badge-pill badge-success">Valid</span>
                                                 @else
-                                                <span class="badge badge-pill badge-danger">In Active</span>
+                                                    <span class="badge badge-pill badge-danger">Invalid</span>
                                                 @endif
                                             </td>
-                                            <td>
-                                                <a href="{{ route('category.edit', $item->id) }}" class="btn btn-info" title="Edit Data"><i class="fa fa-pencil"></i></a>
-                                                <a href="{{ route('category.delete', $item->id) }}" class="btn btn-danger" title="Delete Data" id="delete"><i class="fa fa-trash"></i></a>
+                                            <td style="width: 30%">
+                                                <a href="{{ route('coupon.edit', $item->id) }}" class="btn btn-info" title="Edit Data"><i class="fa fa-pencil"></i></a>
+                                                <a href="{{ route('coupon.delete', $item->id) }}" class="btn btn-danger" title="Delete Data" id="delete"><i class="fa fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -61,12 +62,12 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                             <div class="table-responsive">
-                                <form action="{{ route('category.store') }}" method="POST">
+                                <form action="{{ route('coupon.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group">
                                         <h5>Category Name<span class="text-danger">*</span></h5>
                                         <div class="controls">
-                                            <input type="text" name="category_name_en" class="form-control">
+                                            <input type="text" name="coupon_name" class="form-control">
                                             @error('coupon_name')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -75,7 +76,7 @@
                                     <div class="form-group">
                                         <h5>Coupon Discount (%) <span class="text-danger">*</span></h5>
                                         <div class="controls">
-                                            <input type="text" name="category_name_vn" class="form-control">
+                                            <input type="number" name="coupon_discount" class="form-control" min=1 max=100>
                                             @error('coupon_discount')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -83,9 +84,9 @@
                                     </div><div class="form-group">
                                         <h5>Coupon Validity<span class="text-danger">*</span></h5>
                                         <div class="controls">
-                                            <input type="date" name="category_icon" class="form-control">
+                                            <input type="date" name="coupon_validity" class="form-control" min="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
                                             @error('coupon_validity')
-                                            <span class="text-danger">{{ $message }}</span>
+                                                <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                     </div>

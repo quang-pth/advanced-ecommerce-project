@@ -131,8 +131,8 @@ class ShippingAreaController extends Controller
 //    end DISTRICT SHIPPING
     public function StateView() {
         $divisions = ShipDivision::orderBy('division_name', 'ASC')->get();
-        $districts = ShipDistrict::with('division')->orderBy('id', 'DESC')->get();
-        $states = ShipState::orderBy('id', 'DESC')->get();
+        $districts = ShipDistrict::orderBy('id', 'DESC')->get();
+        $states = ShipState::with('division', 'district')->orderBy('id', 'DESC')->get();
         return view('backend.ship.state.view_state', compact('divisions', 'districts', 'states'));
     }
 
@@ -141,6 +141,55 @@ class ShippingAreaController extends Controller
         return response()->json($districts);
     }
 
+    public function StateStore(Request $request) {
+        $request->validate([
+            'division_id' => 'required',
+            'district_id' => 'required',
+            'state_name' => 'required',
+        ]);
+
+        ShipState::insert([
+            'division_id' => $request->division_id,
+            'district_id' => $request->district_id,
+            'state_name' => $request->state_name,
+            'created_at' => Carbon::now(),
+        ]);
+
+        $notification = array(
+            'message' => 'State Inserted Successfully',
+            'alert-type' => 'success',
+        );
+
+        return redirect()->back()->with($notification);
+    }
+
+    public function StateEdit($id) {
+        $divisions = ShipDivision::orderBy('division_name', 'ASC')->get();
+        $districts = ShipDistrict::orderBy('district_name', 'ASC')->get();
+        $state = ShipState::findOrFail($id);
+        return view('backend.ship.state.edit_state', compact('districts', 'divisions', 'state'));
+    }
+
+    public function StateUpdate(Request $request, $id) {
+        $request->validate([
+            'division_id' => 'required',
+            'district_id' => 'required',
+            'state_name' => 'required'
+        ]);
+
+        ShipState::findOrFail($id)->update([
+            'division_id' => $request->division_id,
+            'district_id' => $request->district_id,
+            'state_name' => $request->state_name,
+        ]);
+
+        $notification = array(
+            'message' => 'State Updated Successfully',
+            'alert-type' => 'info',
+        );
+
+        return redirect()->route('manage-state')->with($notification);
+    }
 //    start ship STATE
 
 

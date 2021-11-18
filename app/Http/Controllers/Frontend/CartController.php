@@ -39,6 +39,7 @@ class CartController extends Controller
                     'image' => $product->product_thumbnail,
                     'color' => $request->color,
                     'size' => $request->size,
+                    'slug' => strtolower(str_replace(' ', '-', $request->product_name)),
                 ]
             ]);
         }

@@ -70,7 +70,8 @@
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                </div><div class="form-group">
+                                </div>
+                                <div class="form-group">
                                     <h5>SubCategory Select <span class="text-danger">*</span></h5>
                                     <div class="controls">
                                         <select name="subcategory_id" class="form-control">

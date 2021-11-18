@@ -117,5 +117,15 @@ class ShippingAreaController extends Controller
 
         return redirect()->route('manage-district')->with($notification);
     }
+
+    public function DistrictDelete($id) {
+        ShipDistrict::findOrFail($id)->delete();
+
+        $notification = array(
+            'message' => 'District Deleted Successfully',
+            'alert-type' => 'info',
+        );
+        return redirect()->back()->with($notification);
+    }
 //    end DISTRICT SHIPPING
 }

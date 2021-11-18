@@ -191,8 +191,8 @@ Route::prefix('coupons')->group(function() {
 Route::prefix('shipping')->group(function() {
     Route::get('/division/view', [ShippingAreaController::class, 'DivisionView'])->name('manage-division');
     Route::post('/division/store', [ShippingAreaController::class, 'DivisionStore'])->name('division.store');
-    Route::get('/edit/{id}', [CouponController::class, 'CouponEdit'])->name('coupon.edit');
-    Route::post('/update/{id}', [CouponController::class, 'CouponUpdate'])->name('coupon.update');
-    Route::get('/delete/{id}', [CouponController::class, 'CouponDelete'])->name('coupon.delete');
+    Route::get('/division/edit/{id}', [ShippingAreaController::class, 'DivisionEdit'])->name('division.edit');
+    Route::post('/division/update/{id}', [ShippingAreaController::class, 'DivisionUpdate'])->name('division.update');
+    Route::get('/division/delete/{id}', [ShippingAreaController::class, 'DivisionDelete'])->name('division.delete');
 
 });

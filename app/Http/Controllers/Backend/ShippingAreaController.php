@@ -32,4 +32,26 @@ class ShippingAreaController extends Controller
         return redirect()->back()->with($notification);
     }
 
+    public function DivisionEdit($id) {
+        $division = ShipDivision::findOrFail($id);
+        return view('backend.ship.division.edit_division', compact('division'));
+    }
+
+    public function DivisionUpdate(Request $request, $id) {
+        $request->validate([
+            'division_name' => 'required'
+        ]);
+
+        ShipDivision::findOrFail($id)->update([
+            'division_name' => $request->division_name
+        ]);
+
+        $notification = array(
+            'message' => 'Division Updated Successfully',
+            'alert-type' => 'info',
+        );
+
+        return redirect()->route('manage-division')->with($notification);
+    }
+
 }

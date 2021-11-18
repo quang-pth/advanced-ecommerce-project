@@ -301,14 +301,15 @@
                 $('span[id="cartQty"]').text(response.cartQty);
                 let miniCart = "";
                 $.each(response.carts, function (key, value) {
+                    const productUrl = `product/details/${value.id}/${value.options.slug}`
                     miniCart += (`
                         <div class="cart-item product-summary">
                             <div class="row">
                                 <div class="col-xs-4">
-                                    <div class="image"> <a href="detail.html"><img src="/${value.options.image}" alt=""></a> </div>
+                                    <div class="image"> <a href="/${productUrl}"><img src="/${value.options.image}" alt=""></a> </div>
                                 </div>
                                 <div class="col-xs-7">
-                                    <h3 class="name"><a href="index.php?page-detail">${value.name}</a></h3>
+                                    <h3 class="name"><a href="/${productUrl}">${value.name}</a></h3>
                                     <div class="price">$${value.price} * ${value.qty}</div>
                                 </div>
                                 <div class="col-xs-1 action"> <button type="submit" id="${value.rowId}" onclick="miniCartRemove(this.id)" class="fa fa-trash"></i></button> </div>

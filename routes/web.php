@@ -202,4 +202,11 @@ Route::prefix('shipping')->group(function() {
     Route::post('/district/update/{id}', [ShippingAreaController::class, 'DistrictUpdate'])->name('district.update');
     Route::get('/district/delete/{id}', [ShippingAreaController::class, 'DistrictDelete'])->name('district.delete');
 
+//    ship STATE
+    Route::get('/state/view', [ShippingAreaController::class, 'StateView'])->name('manage-state');
+    Route::get('/district/ajax/{division_id}', [ShippingAreaController::class, 'GetDistrict']);
+    Route::post('/district/store', [ShippingAreaController::class, 'DistrictStore'])->name('district.store');
+    Route::get('/district/edit/{id}', [ShippingAreaController::class, 'DistrictEdit'])->name('district.edit');
+    Route::post('/district/update/{id}', [ShippingAreaController::class, 'DistrictUpdate'])->name('district.update');
+    Route::get('/district/delete/{id}', [ShippingAreaController::class, 'DistrictDelete'])->name('district.delete');
 });

@@ -57,8 +57,9 @@ class ShippingAreaController extends Controller
     }
 
     public function DivisionDelete($id) {
-        ShipDivision::findOrFail($id)->delete();
+        $divisionToDelete = ShipDivision::findOrFail($id);
 
+        $divisionToDelete->delete();
         $notification = array(
             'message' => 'Division Deleted Successfully',
             'alert-type' => 'info',

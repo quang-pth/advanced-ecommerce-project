@@ -10,4 +10,12 @@ class ShipDivision extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function district() {
+        return $this->hasMany(ShipDistrict::class, 'division_id', 'id');
+    }
+
+    public function state() {
+        return $this->hasMany(ShipState::class, 'division_id', 'id');
+    }
 }

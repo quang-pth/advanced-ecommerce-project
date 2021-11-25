@@ -595,7 +595,9 @@ ${value.product.discount_price} <span>$ ${value.product.selling_price}</span>`}
             dataType: "json",
             data: {coupon_name: coupon_name},
             url: "{{url('/coupon-apply')}}",
-            success: function(res) {
+            success: function(data) {
+                couponCalculation();
+                $('#couponField').hide();
                 const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -603,17 +605,17 @@ ${value.product.discount_price} <span>$ ${value.product.selling_price}</span>`}
                     timer: 3000
                 });
 
-                if ($.isEmptyObject(res.error)) {
+                if ($.isEmptyObject(data.error)) {
                     Toast.fire({
                         type: 'success',
                         icon: 'success',
-                        title: res.success
+                        title: data.success
                     });
                 } else {
                     Toast.fire({
                         type: 'error',
                         icon: 'error',
-                        title: res.error
+                        title: data.error
                     })
                 }
             }
@@ -648,7 +650,7 @@ ${value.product.discount_price} <span>$ ${value.product.selling_price}</span>`}
                             </div>
                             <div class="cart-sub-total">
                                 Coupon name: <span class="inner-left-md">${data.coupon_name}</span>
-                                <button type="submit"><i class="fa fa-times"></i></button>
+                                <button type="submit" onclick="couponRemove()" class="fa fa-times"></i></button>
                             </div>
                             <div class="cart-grand-total">
                                 Discount Amount<span class="inner-left-md">$${data.discount_amount}</span>
@@ -664,7 +666,45 @@ ${value.product.discount_price} <span>$ ${value.product.selling_price}</span>`}
     }
     couponCalculation();
 
+
 </script>
+{{--    COUPON REMOVE--}}
+<script type="text/javascript">
+    function couponRemove() {
+        $.ajax({
+            type: 'GET',
+            url: "{{ url('/coupon-remove') }}",
+            dataType: 'json',
+            success: function (data) {
+                couponCalculation(); // reload coupon session
+                $('#couponField').show();
+                $('#coupon_name').val('');
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+
+                if ($.isEmptyObject(data.error)) {
+                    Toast.fire({
+                        type: 'success',
+                        icon: 'success',
+                        title: data.success
+                    });
+                } else {
+                    Toast.fire({
+                        type: 'error',
+                        icon: 'error',
+                        title: data.error
+                    })
+                }
+            }
+        })
+    }
+</script>
+
+{{--    END COUPON REMOVE--}}
 
 {{--END Coupon Apply CART--}}
 

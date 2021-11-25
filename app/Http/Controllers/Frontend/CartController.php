@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Session;
 class CartController extends Controller
 {
     public function AddToCart(Request $request, $id) {
+        if(Session::has('coupon')) {
+            Session::forget('coupon');
+        }
+
         $product = Product::findOrFail($id);
         if ($product->discount_price == NULL) {
             $cart = Cart::add([
@@ -99,8 +103,8 @@ class CartController extends Controller
             Session::put('coupon', [
                 'coupon_name' => $coupon->coupon_name,
                 'coupon_discount' => $coupon->coupon_discount,
-                'discount_amount' => round(Cart::total() * intval($coupon->coupon_discount) / 100),
-                'total_amount' => round(Cart::total() - (Cart::total() * intval($coupon->coupon_discount) / 100)),
+                'discount_amount' => round(intval(Cart::total()) * intval($coupon->coupon_discount) / 100),
+                'total_amount' => round(intval(Cart::total()) - (intval(Cart::total()) * intval($coupon->coupon_discount) / 100)),
             ]);
             return response()->json(array(
                 'success' => 'Coupon applied successfully',
@@ -118,7 +122,6 @@ class CartController extends Controller
                 'coupon_discount' => session()->get('coupon')['coupon_discount'],
                 'discount_amount' => session()->get('coupon')['discount_amount'],
                 'total_amount' => session()->get('coupon')['total_amount'],
-                'session_info' => session()->get('coupon'),
             ));
         } else {
             return response()->json(array(

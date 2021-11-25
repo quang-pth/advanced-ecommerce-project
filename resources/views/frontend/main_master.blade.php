@@ -333,6 +333,7 @@
             url: '/minicart/product-remove/' + rowId,
             dataType: 'json',
             success: function (response) {
+                couponCalculation();
                 miniCart();
                 cart();
                 const Toast = Swal.mixin({
@@ -528,8 +529,12 @@ ${value.product.discount_price} <span>$ ${value.product.selling_price}</span>`}
             url: '/user/cart-remove/' + rowId,
             dataType: 'json',
             success: function (response) {
+                couponCalculation();
                 cart();
                 miniCart();
+                $('#couponField').show();
+                $('#coupon_name').val('');
+
                 const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -562,6 +567,7 @@ ${value.product.discount_price} <span>$ ${value.product.selling_price}</span>`}
             dataType: "json",
             success: function(data) {
                 // update cart related components after increment succesfully
+                couponCalculation();
                 cart();
                 miniCart();
             }
@@ -575,6 +581,7 @@ ${value.product.discount_price} <span>$ ${value.product.selling_price}</span>`}
             url: "/cart-decrement/" + rowId,
             dataType: "json",
             success: function(data) {
+                couponCalculation();
                 cart();
                 miniCart();
             }

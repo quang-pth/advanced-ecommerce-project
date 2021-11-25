@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Coupon;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Support\Facades\Session;
 
 class CartPageController extends Controller
 {
@@ -27,6 +29,11 @@ class CartPageController extends Controller
     public function RemoveCartProduct($rowId) {
         try {
             Cart::remove($rowId);
+
+            if(Session::has('coupon')) {
+                Session::forget('coupon');
+            }
+
             return response()->json(['success' => 'Successully Remove From Cart']);
         } catch(Exception $exception) {
             return response()->json(['error' => 'Not Valid Cart ID']);
@@ -37,6 +44,18 @@ class CartPageController extends Controller
         try {
             $cartToUpdate = Cart::get($rowId);
             Cart::update($rowId, $cartToUpdate->qty + 1);
+            if(Session::has('coupon')) {
+                $coupon_name = Session::get('coupon')['coupon_name'];
+                $coupon = Coupon::where('coupon_name', $coupon_name)->first();
+
+                Session::put('coupon', [
+                    'coupon_name' => $coupon->coupon_name,
+                    'coupon_discount' => $coupon->coupon_discount,
+                    'discount_amount' => round(Cart::total() * intval($coupon->coupon_discount) / 100),
+                    'total_amount' => round(Cart::total() - (Cart::total() * intval($coupon->coupon_discount) / 100)),
+                ]);
+            }
+
             return response()->json(['increment']);
         } catch(Exception $exception) {
             return response()->json(['error' => 'Quantity Not Increasing Failed']);
@@ -47,6 +66,17 @@ class CartPageController extends Controller
         try {
             $cartToUpdate = Cart::get($rowId);
             Cart::update($rowId, $cartToUpdate->qty - 1);
+            if(Session::has('coupon')) {
+                $coupon_name = Session::get('coupon')['coupon_name'];
+                $coupon = Coupon::where('coupon_name', $coupon_name)->first();
+
+                Session::put('coupon', [
+                    'coupon_name' => $coupon->coupon_name,
+                    'coupon_discount' => $coupon->coupon_discount,
+                    'discount_amount' => round(Cart::total() * intval($coupon->coupon_discount) / 100),
+                    'total_amount' => round(Cart::total() - (Cart::total() * intval($coupon->coupon_discount) / 100)),
+                ]);
+            }
             return response()->json(['increment']);
         } catch(Exception $exception) {
             return response()->json(['error' => 'Quantity Not Increasing Failed']);

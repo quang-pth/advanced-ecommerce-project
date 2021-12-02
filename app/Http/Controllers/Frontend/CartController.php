@@ -138,4 +138,32 @@ class CartController extends Controller
         ]);
     }
 
+    public function CheckoutCreate() {
+        if (Auth::check()) {
+            if (Cart::total() > 0) {
+                $carts = Cart::content();
+                $cartQty = Cart::count();
+                $cartTotal = Cart::total();
+
+                return view('frontend.checkout.checkout_view', compact('carts', 'cartQty', 'cartTotal'));
+            } else {
+                $notification = array(
+                    'message' => 'Shopping at least one product',
+                    'alert-type' => 'error'
+                );
+
+                return redirect()->to('/')->with($notification);
+            }
+
+        } else {
+            $notification = array(
+                'message' => 'You need to Login first',
+                'alert-type' => 'error'
+            );
+
+            return redirect()->route('login')->with($notification);
+        }
+
+    } // end CheckoutCreate method
+
 }
